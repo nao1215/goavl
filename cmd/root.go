@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 	"os"
 
 	"github.com/nao1215/goalinter-v1/internal/lint"
@@ -17,14 +17,9 @@ var rootCmd = &cobra.Command{
 	},
 }
 
-func exitError(msg interface{}) {
-	fmt.Fprintln(os.Stderr, msg)
-	os.Exit(1)
-}
-
 // Execute run command.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		exitError(err)
+		log.Fatal(err)
 	}
 }

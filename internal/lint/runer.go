@@ -1,6 +1,13 @@
 package lint
 
-type check func()
+import (
+	"log"
+	"os"
+
+	"github.com/nao1215/goalinter-v1/internal/utils"
+)
+
+type check func(filepath string)
 
 // Task define one of the perspectives that Linter checks
 type Task struct {
@@ -14,14 +21,26 @@ type Task struct {
 func setup() []Task {
 	tasks := []Task{}
 
-	tasks = append(tasks, NewSyntaxViewTask())
+	tasks = append(tasks, NewViewSyntaxTask())
 	return tasks
 }
 
 // Run execute all linter-tasks.
 func Run() {
 	tasks := setup()
+	cwd, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	files, err := utils.Walk(cwd)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	for _, v := range tasks {
-		v.Check()
+		for _, f := range utils.ExtractGoFile(files) {
+			v.Check(f)
+		}
 	}
 }
