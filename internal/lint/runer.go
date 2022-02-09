@@ -39,7 +39,7 @@ func Run() {
 	}
 
 	for _, v := range tasks {
-		for _, f := range utils.ExtractGoFile(files) {
+		for _, f := range utils.ExtractDesignPackageFile(files) {
 			v.Check(f)
 		}
 	}

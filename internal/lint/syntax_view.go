@@ -1,6 +1,7 @@
 package lint
 
 import (
+	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -22,6 +23,14 @@ func ViewSyntaxChecker(filepath string) {
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
 		log.Fatal(err)
+	}
+	for _, decl := range f.Decls {
+		switch d := decl.(type) {
+		// There are many more other types but we only focus on FuncDecl here.
+		case *ast.FuncDecl:
+			fmt.Println("function declaration:", d.Name)
+			fmt.Println("function declaration:", d.Body.List)
+		}
 	}
 	ast.Print(fset, f)
 }
