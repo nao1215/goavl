@@ -1,6 +1,6 @@
 .PHONY: build test clean vet fmt chkfmt
 
-APP         = goalinter-v1
+APP         = goavl
 GO          = go
 GO_BUILD    = $(GO) build
 GO_FORMAT   = $(GO) fmt

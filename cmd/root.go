@@ -4,13 +4,13 @@ import (
 	"log"
 	"os"
 
-	"github.com/nao1215/goalinter-v1/internal/lint"
+	"github.com/nao1215/goavl/internal/lint"
 	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "goalinter-v1",
-	Short: "goalinter-v1 is linter for goa-v1 (not original one, it's forked project)",
+	Use:   "goavl",
+	Short: "goavl is linter for goa-v1 (not original one, it's forked project)",
 	Run: func(cmd *cobra.Command, args []string) {
 		lint.Run()
 		os.Exit(0)

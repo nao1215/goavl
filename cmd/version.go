@@ -7,12 +7,12 @@ import (
 )
 
 var (
-	// Version is goalinter-v1 version.
+	// Version is goavl version.
 	Version = "0.0.1"
 )
 
 func getVersion() string {
-	return fmt.Sprintf("goalinter-v1 version " + Version + " (under Apache License version 2.0)")
+	return fmt.Sprintf("goavl version " + Version + " (under Apache License version 2.0)")
 }
 
 var versionCmd = &cobra.Command{

@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/nao1215/goalinter-v1/internal/utils"
+	"github.com/nao1215/goavl/internal/utils"
 )
 
 type check func(filepath string)

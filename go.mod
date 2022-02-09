@@ -1,4 +1,4 @@
-module github.com/nao1215/goalinter-v1
+module github.com/nao1215/goavl
 
 go 1.17
 

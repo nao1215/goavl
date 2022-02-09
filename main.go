@@ -1,6 +1,6 @@
 package main
 
-import "github.com/nao1215/goalinter-v1/cmd"
+import "github.com/nao1215/goavl/cmd"
 
 func main() {
 	cmd.Execute()

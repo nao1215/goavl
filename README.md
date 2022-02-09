@@ -1,5 +1,5 @@
 # Work in progress. Don't use this command.
-# goalinter-v1: Goa framework (ver1) linter
+# goavl: Goa framework (ver1) linter
 
 This repository is [forked goa-v1](https://github.com/shogo82148/goa-v1) linter project.
 
