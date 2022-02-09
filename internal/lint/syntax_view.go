@@ -32,5 +32,5 @@ func ViewSyntaxChecker(filepath string) {
 			fmt.Println("function declaration:", d.Body.List)
 		}
 	}
-	ast.Print(fset, f)
+	//ast.Print(fset, f)
 }

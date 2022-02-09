@@ -22,6 +22,7 @@ func setup() []Task {
 	tasks := []Task{}
 
 	tasks = append(tasks, NewViewSyntaxTask())
+	tasks = append(tasks, NewNamingTask())
 	return tasks
 }
 
