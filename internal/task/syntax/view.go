@@ -1,4 +1,4 @@
-package lint
+package syntax
 
 import (
 	"fmt"
@@ -7,15 +7,6 @@ import (
 	"go/token"
 	"log"
 )
-
-// NewViewSyntaxTask return task that check View() function syntax
-func NewViewSyntaxTask() Task {
-	task := Task{
-		Name:  "View() syntax check",
-		Check: ViewSyntaxChecker,
-	}
-	return task
-}
 
 // ViewSyntaxChecker check View() function syntax
 func ViewSyntaxChecker(filepath string) {

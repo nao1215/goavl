@@ -1,4 +1,4 @@
-package lint
+package name
 
 import (
 	"fmt"
@@ -7,15 +7,6 @@ import (
 	"go/token"
 	"log"
 )
-
-// NewNamingTask return task that check variable name and argument name.
-func NewNamingTask() Task {
-	task := Task{
-		Name:  "Variable name and Argument name checker",
-		Check: NamingChecker,
-	}
-	return task
-}
 
 // NamingChecker check variable name and argument name.
 func NamingChecker(filepath string) {
