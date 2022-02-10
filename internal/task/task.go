@@ -41,8 +41,8 @@ func NewViewSyntaxTask() Task {
 // NewNamingTask return task that check variable name and argument name.
 func NewNamingTask() Task {
 	task := Task{
-		Name:  "Variable name and Argument name checker",
-		Check: name.NamingChecker,
+		Name:  "Resource() argument name checker",
+		Check: name.ResourceNameChecker,
 	}
 	return task
 }

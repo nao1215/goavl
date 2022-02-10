@@ -12,7 +12,7 @@ var _ = API("adder", func() {
 	Scheme("http")
 })
 
-var _ = Resource("operands", func() {
+var _ = Resource("operandsNG", func() {
 	Action("add", func() {
 		Routing(GET("add/:left/:right"))
 		Description("add returns the sum of the left and right parameters in the response body")

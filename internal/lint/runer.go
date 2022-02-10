@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/nao1215/goavl/internal/task"
-	"github.com/nao1215/goavl/internal/utils"
+	"github.com/nao1215/goavl/internal/utils/fileutils"
 )
 
 // Run execute all linter-tasks.
@@ -16,13 +16,13 @@ func Run() {
 		log.Fatal(err)
 	}
 
-	files, err := utils.Walk(cwd)
+	files, err := fileutils.Walk(cwd)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	for _, v := range tasks {
-		for _, f := range utils.ExtractDesignPackageFile(files) {
+	for _, f := range fileutils.ExtractDesignPackageFile(files) {
+		for _, v := range tasks {
 			v.Check(f)
 		}
 	}

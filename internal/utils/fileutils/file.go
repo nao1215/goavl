@@ -1,4 +1,4 @@
-package utils
+package fileutils
 
 import (
 	"go/parser"
@@ -63,6 +63,7 @@ func ExtractDesignPackageFile(files []string) []string {
 		for _, v := range f.Imports {
 			if v.Name.Name == "." {
 				extractFiles = append(extractFiles, filepath)
+				break
 			}
 		}
 	}
