@@ -260,3 +260,54 @@ func toUpperFirstRune(s string) string {
 	rs := []rune(s)
 	return strings.ToUpper(string(rs[0])) + string(rs[1:])
 }
+
+//---------The following code does not exist in the original version-------------
+
+// IsChainCaseForRouting whether argument is chain-case style string, return true.
+func IsChainCaseForRouting(s string) bool {
+	if strings.Contains(s, "-") {
+		fields := strings.Split(s, "-")
+		for _, field := range fields {
+			if !isMadeByLowerAndDigitForRouting(field) {
+				return false
+			}
+		}
+		return true
+	}
+	return isMadeByLowerAndDigitForRouting(s)
+}
+
+func isMadeByLowerAndDigitForRouting(s string) bool {
+	if len(s) == 0 {
+		return false
+	}
+
+	for _, r := range s {
+		if !unicode.IsLower(r) && !unicode.IsDigit(r) && !(r == rune(':')) && !(r == rune('/')) {
+			return false
+		}
+	}
+
+	return true
+}
+
+// ToChainCaseForRouting convert argument to chain case style string.
+// If argument is empty, return itself.
+func ToChainCaseForRouting(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+
+	str := ""
+	for i, f := range splitToLowerFields(s) {
+		if i == 0 {
+			str = f
+			continue
+		} else if f == "/:" || strings.HasSuffix(str, "/:") {
+			str = str + f
+			continue
+		}
+		str = str + "-" + f
+	}
+	return str
+}

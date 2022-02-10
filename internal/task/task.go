@@ -22,6 +22,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewViewSyntaxTask()) // Not implement
 	tasks = append(tasks, NewResourceNameCheckerTask())
 	tasks = append(tasks, NewActionNameCheckerTask())
+	tasks = append(tasks, NewRoutingNameCheckerTask())
 	return tasks
 }
 
@@ -39,7 +40,7 @@ func NewViewSyntaxTask() Task {
 	return task
 }
 
-// NewResourceNameCheckerTask return task that check variable name and argument name.
+// NewResourceNameCheckerTask return task that check Resource() argument name.
 func NewResourceNameCheckerTask() Task {
 	task := Task{
 		Name:  "Resource() argument name checker",
@@ -48,11 +49,20 @@ func NewResourceNameCheckerTask() Task {
 	return task
 }
 
-// NewActionNameCheckerTask return task that check variable name and argument name.
+// NewActionNameCheckerTask return task that check Action() argument name.
 func NewActionNameCheckerTask() Task {
 	task := Task{
 		Name:  "Action() argument name checker",
 		Check: name.ActionNameChecker,
+	}
+	return task
+}
+
+// NewRoutingNameCheckerTask return task that check Routing() argument name.
+func NewRoutingNameCheckerTask() Task {
+	task := Task{
+		Name:  "Routing() argument name checker",
+		Check: name.RoutingNameChecker,
 	}
 	return task
 }

@@ -7,7 +7,7 @@ import (
 
 var _ = Resource("operandsNG", func() {
 	Action("add-Ng", func() {
-		Routing(GET("add/:left/:right"))
+		Routing(GET("add_ng/:left/:right"))
 		Description("add returns the sum of the left and right parameters in the response body")
 		Params(func() {
 			Param("left", Integer, "Left operand")
