@@ -5,13 +5,6 @@ import (
 	. "github.com/shogo82148/goa-v1/design/apidsl"
 )
 
-var _ = API("adder", func() {
-	Title("The adder API")
-	Description("A teaser for goa")
-	Host("localhost:8080")
-	Scheme("http")
-})
-
 var _ = Resource("operandsNG", func() {
 	Action("add-Ng", func() {
 		Routing(GET("add/:left/:right"))
@@ -22,5 +15,4 @@ var _ = Resource("operandsNG", func() {
 		})
 		Response(OK, "text/plain")
 	})
-
 })
