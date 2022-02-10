@@ -4,3 +4,6 @@
 This repository is [forked goa-v1](https://github.com/shogo82148/goa-v1) linter project.
 
 Only Version 1 is supported, Version 3 is not supported.
+
+# Progress of implement
+- Add check argument name of Resource().
