@@ -19,8 +19,9 @@ type Task struct {
 func Setup() []Task {
 	tasks := []Task{}
 
-	tasks = append(tasks, NewViewSyntaxTask())
-	tasks = append(tasks, NewNamingTask())
+	tasks = append(tasks, NewViewSyntaxTask()) // Not implement
+	tasks = append(tasks, NewResourceNameCheckerTask())
+	tasks = append(tasks, NewActionNameCheckerTask())
 	return tasks
 }
 
@@ -38,11 +39,20 @@ func NewViewSyntaxTask() Task {
 	return task
 }
 
-// NewNamingTask return task that check variable name and argument name.
-func NewNamingTask() Task {
+// NewResourceNameCheckerTask return task that check variable name and argument name.
+func NewResourceNameCheckerTask() Task {
 	task := Task{
 		Name:  "Resource() argument name checker",
 		Check: name.ResourceNameChecker,
+	}
+	return task
+}
+
+// NewActionNameCheckerTask return task that check variable name and argument name.
+func NewActionNameCheckerTask() Task {
+	task := Task{
+		Name:  "Action() argument name checker",
+		Check: name.ActionNameChecker,
 	}
 	return task
 }
