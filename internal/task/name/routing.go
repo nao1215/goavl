@@ -20,29 +20,43 @@ func RoutingNameChecker(filepath string) {
 	if err != nil {
 		ioutils.Die(err.Error())
 	}
+
 	for _, decl := range f.Decls {
-		switch d := decl.(type) {
-		case *ast.GenDecl:
-			ast.Inspect(d, func(node ast.Node) bool {
-				switch node := node.(type) {
-				case *ast.CallExpr:
-					if node.Fun.(*ast.Ident).Name == "Routing" {
-						firstArg := strings.Replace(node.Args[0].(*ast.CallExpr).Args[0].(*ast.BasicLit).Value,
-							"\"", "", -1)
-						if !strutils.IsChainCaseForRouting(firstArg) {
-							fmt.Fprintf(os.Stderr,
-								"[%s] %s:%-4d Routing(%s(\"%s\")) is not chain case ('%s')\n",
-								color.YellowString("WARN"),
-								filepath,
-								fset.Position(node.Fun.(*ast.Ident).NamePos).Line,
-								node.Args[0].(*ast.CallExpr).Fun.(*ast.Ident).Name,
-								firstArg,
-								strutils.ToChainCaseForRouting(firstArg))
+		checkRoutingArgName(filepath, fset, decl)
+	}
+}
+
+func checkRoutingArgName(filepath string, fset *token.FileSet, decl ast.Decl) {
+	switch d := decl.(type) {
+	case *ast.GenDecl:
+		ast.Inspect(d, func(node ast.Node) bool {
+			switch node := node.(type) {
+			case *ast.CallExpr:
+				if node.Fun.(*ast.Ident).Name == "Routing" {
+					for _, arg := range node.Args {
+						switch cl := arg.(type) {
+						case *ast.CallExpr:
+							for _, bl := range cl.Args {
+								switch bl := bl.(type) {
+								case *ast.BasicLit:
+									firstArg := strings.Replace(bl.Value, "\"", "", -1)
+									if !strutils.IsChainCaseForRouting(firstArg) {
+										fmt.Fprintf(os.Stderr,
+											"[%s] %s:%-4d Routing(%s(\"%s\")) is not chain case ('%s')\n",
+											color.YellowString("WARN"),
+											filepath,
+											fset.Position(node.Fun.(*ast.Ident).NamePos).Line,
+											cl.Fun.(*ast.Ident).Name,
+											firstArg,
+											strutils.ToChainCaseForRouting(firstArg))
+									}
+								}
+							}
 						}
 					}
 				}
-				return true
-			})
-		}
+			}
+			return true
+		})
 	}
 }

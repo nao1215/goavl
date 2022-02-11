@@ -24,6 +24,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewResourceNameCheckerTask())
 	tasks = append(tasks, NewActionNameCheckerTask())
 	tasks = append(tasks, NewRoutingNameCheckerTask())
+	tasks = append(tasks, NewAttributeNameCheckerTask())
 	return tasks
 }
 
@@ -64,6 +65,15 @@ func NewRoutingNameCheckerTask() Task {
 	task := Task{
 		Name:  "Routing() argument name checker",
 		Check: name.RoutingNameChecker,
+	}
+	return task
+}
+
+// NewAttributeNameCheckerTask return task that check Attribute argument name.
+func NewAttributeNameCheckerTask() Task {
+	task := Task{
+		Name:  "Attribute() variable and argument name checker",
+		Check: name.AttributeNameChecker,
 	}
 	return task
 }

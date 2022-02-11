@@ -13,36 +13,35 @@ import (
 	"github.com/nao1215/goavl/internal/utils/strutils"
 )
 
-// ResourceNameChecker check variable name and argument name.
-func ResourceNameChecker(filepath string) {
+// AttributeNameChecker check argument name.
+func AttributeNameChecker(filepath string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
 		ioutils.Die(err.Error())
 	}
-
 	for _, decl := range f.Decls {
-		checkResourceArgName(filepath, fset, decl)
+		checkAttributeArgName(filepath, fset, decl)
 	}
 }
 
-func checkResourceArgName(filepath string, fset *token.FileSet, decl ast.Decl) {
+func checkAttributeArgName(filepath string, fset *token.FileSet, decl ast.Decl) {
 	switch d := decl.(type) {
 	case *ast.GenDecl:
 		ast.Inspect(d, func(node ast.Node) bool {
 			switch node := node.(type) {
-			case *ast.CallExpr:
-				if node.Fun.(*ast.Ident).Name == "Resource" {
-					for _, bl := range node.Args {
-						switch bl := bl.(type) {
+			case *ast.ExprStmt:
+				if node.X.(*ast.CallExpr).Fun.(*ast.Ident).Name == "Attribute" {
+					for _, arg := range node.X.(*ast.CallExpr).Args {
+						switch bl := arg.(type) {
 						case *ast.BasicLit:
 							firstArg := strings.Replace(bl.Value, "\"", "", -1)
 							if !strutils.IsSnakeCase(firstArg) {
 								fmt.Fprintf(os.Stderr,
-									"[%s] %s:%-4d Resource(\"%s\") is not snake case ('%s')\n",
+									"[%s] %s:%-4d Attribute(\"%s\") is not snake case ('%s')\n",
 									color.YellowString("WARN"),
 									filepath,
-									fset.Position(node.Fun.(*ast.Ident).NamePos).Line,
+									fset.Position(node.X.(*ast.CallExpr).Fun.(*ast.Ident).NamePos).Line,
 									firstArg,
 									strutils.ToSnakeCase(firstArg))
 							}

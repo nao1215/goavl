@@ -16,3 +16,11 @@ var _ = Resource("operandsNG", func() {
 		Response(OK, "text/plain")
 	})
 })
+
+// TestMedia is media type for test
+var TestMedia = MediaType("application/vnd.test_media", func() {
+	Attribute("AbcDefID")
+	Attribute("zzzXXX-ss", String, func() {
+		NoExample()
+	})
+})
