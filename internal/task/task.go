@@ -20,11 +20,12 @@ type Task struct {
 func Setup() []Task {
 	tasks := []Task{}
 
-	tasks = append(tasks, NewViewSyntaxTask()) // Not implement
 	tasks = append(tasks, NewResourceNameCheckerTask())
 	tasks = append(tasks, NewActionNameCheckerTask())
 	tasks = append(tasks, NewRoutingNameCheckerTask())
 	tasks = append(tasks, NewAttributeNameCheckerTask())
+	tasks = append(tasks, NewAttributeNoExampleCheckerTask())
+	tasks = append(tasks, NewViewSyntaxTask()) // Not implement
 	return tasks
 }
 
@@ -74,6 +75,15 @@ func NewAttributeNameCheckerTask() Task {
 	task := Task{
 		Name:  "Attribute() variable and argument name checker",
 		Check: name.AttributeNameChecker,
+	}
+	return task
+}
+
+// NewAttributeNoExampleCheckerTask return task that check whether the example of Attribute() is written.
+func NewAttributeNoExampleCheckerTask() Task {
+	task := Task{
+		Name:  "Checker if the example of Attribute() is written",
+		Check: syntax.AttributeNoExampleChecker,
 	}
 	return task
 }

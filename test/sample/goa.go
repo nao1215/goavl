@@ -23,4 +23,10 @@ var TestMedia = MediaType("application/vnd.test_media", func() {
 	Attribute("zzzXXX-ss", String, func() {
 		NoExample()
 	})
+	Attribute("no_example", String, func() {
+		Description("no example in Attribute()")
+	})
+	Attribute("with_example", String, func() {
+		Example("Ok case")
+	})
 })
