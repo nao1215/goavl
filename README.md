@@ -51,10 +51,10 @@ var _ = Resource("operandsNG", func() {
         })
 })
 
-$ goavl
-/home/nao/.go/src/github.com/nao1215/goavl/test/sample/goa.go:8 Resource("operandsNG") is not snake case ('operands_ng')
-/home/nao/.go/src/github.com/nao1215/goavl/test/sample/goa.go:9 Action("add-Ng") is not snake case ('add_ng')
-/home/nao/.go/src/github.com/nao1215/goavl/test/sample/goa.go:10 Routing(GET("add_ng/:left/:right")) is not chain case ('add-ng/:left/:right')
+$ ./goavl 
+[WARN] test/sample/goa.go:8    Resource("operandsNG") is not snake case ('operands_ng')
+[WARN] test/sample/goa.go:9    Action("add-Ng") is not snake case ('add_ng')
+[WARN] test/sample/goa.go:10   Routing(GET("add_ng/:left/:right")) is not chain case ('add-ng/:left/:right')
 ```
 
 # ライセンス
