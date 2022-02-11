@@ -46,24 +46,20 @@ func checkView(filepath string, fset *token.FileSet, decl ast.Decl) {
 							return true
 						}
 
-						hasView := false
 						ast.Inspect(node, func(n ast.Node) bool {
 							switch n := n.(type) {
 							case *ast.Ident:
 								if n.Name == "View" {
-									hasView = true
+									fmt.Fprintf(os.Stderr,
+										"[%s] %s:%-4d %s() has View(). View() can be used in MediaType() or Response()\n",
+										color.YellowString("WARN"),
+										filepath,
+										fset.Position(n.NamePos).Line,
+										function)
 								}
 							}
 							return true
 						})
-						if hasView {
-							fmt.Fprintf(os.Stderr,
-								"[%s] %s:%-4d %s() has View(). View() can be used in MediaType() or Response()\n",
-								color.YellowString("WARN"),
-								filepath,
-								fset.Position(node.Fun.(*ast.Ident).NamePos).Line,
-								function)
-						}
 					}
 				}
 			}

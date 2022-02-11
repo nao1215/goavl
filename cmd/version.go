@@ -8,7 +8,7 @@ import (
 
 var (
 	// Version is goavl version.
-	Version = "0.0.4"
+	Version = "0.0.5"
 )
 
 func getVersion() string {
