@@ -40,7 +40,7 @@ func checkRoutingArgName(filepath string, fset *token.FileSet, decl ast.Decl) {
 								switch bl := bl.(type) {
 								case *ast.BasicLit:
 									firstArg := strings.Replace(bl.Value, "\"", "", -1)
-									if !strutils.IsChainCaseForRouting(firstArg) {
+									if firstArg != "" && !strutils.IsChainCaseForRouting(firstArg) {
 										fmt.Fprintf(os.Stderr,
 											"[%s] %s:%-4d Routing(%s(\"%s\")) is not chain case ('%s')\n",
 											color.YellowString("WARN"),

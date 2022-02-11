@@ -9,9 +9,12 @@ var _ = Resource("operands", func() {
 		Routing(GET("add-ok/:left/:right"))
 	})
 	Action("delete", func() {
-		Routing(GET("delete_ng/:left-ng/:right"))
+		Routing(DELETE("delete_ng/:left-ng/:right"))
 	})
 	Action("post", func() {
-		Routing(GET("postNg/:left/:right"))
+		Routing(POST("postNg/:left/:right"))
+	})
+	Action("put", func() {
+		Routing(PUT(""))
 	})
 })
