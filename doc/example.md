@@ -53,10 +53,10 @@ var _ = Resource("operands", func() {
 		Routing(GET("add-ok/:left/:right"))
 	})
 	Action("delete", func() {
-		Routing(DELETE("delete_ng/:left-ng/:right"))
+		Routing(DELETE("delete_ng/:left-ng/qright"))
 	})
 	Action("post", func() {
-		Routing(POST("postNg/:left/:right"))
+		Routing(POST("/postNg/abc.php"))
 	})
 	Action("put", func() {
 		Routing(PUT(""))
@@ -65,8 +65,8 @@ var _ = Resource("operands", func() {
 ```
 ```
 $ goavl 
-[WARN] test/sample/routing.go:13   Routing(GET("delete_ng/:left-ng/:right")) is not chain case ('delete-ng/:left-ng/:right')
-[WARN] test/sample/routing.go:16   Routing(GET("postNg/:left/:right")) is not chain case ('post-ng/:left/:right')
+[WARN] test/sample/routing.go:12   Routing(DELETE("delete_ng/:left-ng/:right")) is not chain case ('delete-ng/:left-ng/:right')
+[WARN] test/sample/routing.go:15   Routing(POST("/postNg/abc.php")) is not chain case ('/post-ng/abc.php')
 ```
 
 ## Attribute()の引数

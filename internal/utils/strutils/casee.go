@@ -283,7 +283,8 @@ func isMadeByLowerAndDigitForRouting(s string) bool {
 	}
 
 	for _, r := range s {
-		if !unicode.IsLower(r) && !unicode.IsDigit(r) && !(r == rune(':')) && !(r == rune('/')) {
+		if !unicode.IsLower(r) && !unicode.IsDigit(r) &&
+			!(r == rune(':')) && !(r == rune('/')) && !(r == rune('.')) {
 			return false
 		}
 	}
@@ -303,7 +304,9 @@ func ToChainCaseForRouting(s string) string {
 		if i == 0 {
 			str = f
 			continue
-		} else if f == "/:" || strings.HasSuffix(str, "/:") {
+		} else if f == "/:" || f == "/" || f == "." ||
+			strings.HasSuffix(str, "/:") || strings.HasSuffix(str, "/") ||
+			strings.HasSuffix(str, ".") {
 			str = str + f
 			continue
 		}

@@ -12,7 +12,7 @@ var _ = Resource("operands", func() {
 		Routing(DELETE("delete_ng/:left-ng/:right"))
 	})
 	Action("post", func() {
-		Routing(POST("postNg/:left/:right"))
+		Routing(POST("/postNg/abc.php"))
 	})
 	Action("put", func() {
 		Routing(PUT(""))
