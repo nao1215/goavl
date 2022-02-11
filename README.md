@@ -22,6 +22,7 @@ $ go install github.com/nao1215/goavl@latest
 - Resource()の引数
 - Action()の引数
 - Routing()の引数
+- Attribute()の引数
 
 ### 作成予定
 - Type()の変数名、引数の命名規則チェック
@@ -31,7 +32,7 @@ $ go install github.com/nao1215/goavl@latest
 ### 実行例
 goavlはカレントディレクトリ以下にあるdesignパッケージ（goファイル）を抽出し、そのファイルに対してチェックを行います。
 ```
-$ cat test/sample/goa.go   ※ チェック対象のファイルの中身を表示
+$ cat test/sample/goa.go     ※ チェック対象のファイル内容を表示
 package design
 
 import (
@@ -51,10 +52,20 @@ var _ = Resource("operandsNG", func() {
         })
 })
 
+// TestMedia is media type for test
+var TestMedia = MediaType("application/vnd.test_media", func() {
+        Attribute("AbcDefID")
+        Attribute("zzzXXX-ss", String, func() {
+                NoExample()
+        })
+})
+
 $ ./goavl 
 [WARN] test/sample/goa.go:8    Resource("operandsNG") is not snake case ('operands_ng')
 [WARN] test/sample/goa.go:9    Action("add-Ng") is not snake case ('add_ng')
 [WARN] test/sample/goa.go:10   Routing(GET("add_ng/:left/:right")) is not chain case ('add-ng/:left/:right')
+[WARN] test/sample/goa.go:22   Attribute("AbcDefID") is not snake case ('abc_def_id')
+[WARN] test/sample/goa.go:23   Attribute("zzzXXX-ss") is not snake case ('zzz_xxx_ss')
 ```
 
 # ライセンス
