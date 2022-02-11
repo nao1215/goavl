@@ -8,7 +8,7 @@ import (
 )
 
 // Run execute all linter-tasks.
-func Run() {
+func Run(files []string) {
 	tasks := task.Setup()
 	files, err := fileutils.Walk(pathutils.CWD())
 	if err != nil {
@@ -16,8 +16,8 @@ func Run() {
 	}
 
 	for _, f := range fileutils.ExtractDesignPackageFile(files) {
+		f = pathutils.RemoveCWDPath(f)
 		for _, v := range tasks {
-			f = pathutils.RemoveCWDPath(f)
 			v.Check(f)
 		}
 	}
@@ -41,5 +41,21 @@ func PrintAST(files []string) {
 			continue
 		}
 		task.Check(f)
+	}
+}
+
+// CheckOneFile check file that user specify.
+func CheckOneFile(file string) {
+	if !fileutils.IsFile(file) {
+		ioutils.Die("no such file or directory exists: " + file)
+	}
+
+	if !fileutils.IsDesignFile(file) {
+		ioutils.Die("this file is not goa-design file: " + file)
+	}
+
+	tasks := task.Setup()
+	for _, v := range tasks {
+		v.Check(file)
 	}
 }

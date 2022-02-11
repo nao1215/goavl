@@ -6,8 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/nao1215/goavl/internal/utils/ioutils"
 )
 
 // IsFile reports whether the path exists and is a file.
@@ -51,28 +49,39 @@ func ExtractDesignPackageFile(files []string) []string {
 	extractFiles := []string{}
 
 	for _, filepath := range files {
-		fset := token.NewFileSet()
-		f, err := parser.ParseFile(fset, filepath, nil, 0)
-		if err != nil {
-			ioutils.Die(err.Error())
-		}
-
-		// design package or not
-		if f.Name.Name != "design" {
-			continue
-		}
-
-		// TODO:
-		// I want to judge whether file is goa-design file or not by the import path.
-		// However, import path is renamed original path to "." in goa-design file.
-		// Therefore, it is not possible to determine whether it is a goa-design file
-		// with the correct import path ("github.com/shogo82148/goa-v1/design").
-		for _, v := range f.Imports {
-			if v.Name.Name == "." {
-				extractFiles = append(extractFiles, filepath)
-				break
-			}
+		if IsDesignFile(filepath) {
+			extractFiles = append(extractFiles, filepath)
 		}
 	}
 	return extractFiles
+}
+
+// IsDesignFile return whether file is goa-design file.
+func IsDesignFile(file string) bool {
+	if !IsFile(file) {
+		return false
+	}
+
+	fset := token.NewFileSet()
+	f, err := parser.ParseFile(fset, file, nil, 0)
+	if err != nil {
+		return false
+	}
+
+	// design package or not
+	if f.Name.Name != "design" {
+		return false
+	}
+
+	// TODO:
+	// I want to judge whether file is goa-design file or not by the import path.
+	// However, import path is renamed original path to "." in goa-design file.
+	// Therefore, it is not possible to determine whether it is a goa-design file
+	// with the correct import path ("github.com/shogo82148/goa-v1/design").
+	for _, v := range f.Imports {
+		if v.Name.Name == "." {
+			return true
+		}
+	}
+	return false
 }
