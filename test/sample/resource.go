@@ -1,7 +1,6 @@
 package design
 
 import (
-	. "github.com/shogo82148/goa-v1/design"
 	. "github.com/shogo82148/goa-v1/design/apidsl"
 )
 

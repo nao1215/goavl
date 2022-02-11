@@ -84,8 +84,25 @@ $ goavl
 ```
 
 # 構文チェック
-- Exampleは必ず記載する事
+- Description()を必ず記載する事
+- Example()を必ず記載する事
 
+## Description()の有無チェック
+```
+var DescriptionMedia = MediaType("application/vnd.description_media", func() {
+	Attribute("ok")
+	Attribute("ok", String, func() {
+		Description("ok")
+	})
+	Attribute("ng", String, func() {
+		Example("ng")
+	})
+})
+```
+```
+$ goavl
+[WARN] test/sample/description.go:14   Not exist Description() in Attribute().
+```
 ## Example()の有無チェック
 Example()は、クライアント開発者にAPI仕様を伝えるために重要です。そのため、Example()が記載されていない場合は、以下の指摘が発生します。
 ```
