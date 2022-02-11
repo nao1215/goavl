@@ -89,6 +89,7 @@ $ goavl
 # 構文チェック
 - Description()を必ず記載する事
 - Example()を必ず記載する事
+- 使用可能な関数内でView()が使用されているか
 
 ## Description()の有無チェック
 API(), Resource(), Action(), MediaType(), Attribute(), Response(), ResponseTemplate()の中にDescription()がない場合は、警告が出ます。
@@ -127,4 +128,25 @@ var SampleMedia = MediaType("application/vnd.sample_media", func() {
 $ ./goavl 
 [WARN] test/sample/attribute.go:23   NoExample() in Attribute(). NoExample() is not user(client) friendly
 [WARN] test/sample/attribute.go:25   Not exist Example() in Attribute().
+```
+
+## View()の使用箇所チェック
+View()は、MediaType()とResponse()内でのみ使用できます。それ以外の箇所で使用している場合は、以下の指摘が発生します。
+```
+var ViewMedia = MediaType("application/vnd.view_media", func() {
+	View("ok")
+	Attributes(func() {
+		Attribute("test")
+		View("ng")
+	})
+})
+
+var ViewType = Type("ViewType", func() {
+	View("ng")
+})
+```
+```
+$ ./goavl
+[WARN] test/sample/view.go:10   Attributes() has View(). View() can be used in MediaType() or Response()
+[WARN] test/sample/view.go:17   Type() has View(). View() can be used in MediaType() or Response()
 ```

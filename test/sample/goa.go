@@ -34,4 +34,14 @@ var TestMedia = MediaType("application/vnd.test_media", func() {
 	Attribute("with_example", String, func() {
 		Example("Ok case")
 	})
+
+	Attributes(func() {
+		Attribute("test")
+		View("ng")
+	})
+})
+
+// TestType is type
+var TestType = Type("TestType", func() {
+	View("ng")
 })

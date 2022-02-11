@@ -26,7 +26,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewAttributeNameCheckerTask())
 	tasks = append(tasks, NewAttributeNoExampleCheckerTask())
 	tasks = append(tasks, NewNoDescriptionCheckerTask())
-	tasks = append(tasks, NewViewSyntaxTask()) // Not implement
+	tasks = append(tasks, NewViewSyntaxTask())
 	return tasks
 }
 
