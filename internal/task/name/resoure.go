@@ -30,7 +30,7 @@ func ResourceNameChecker(filepath string) {
 						firstArg := strings.Replace(node.Args[0].(*ast.BasicLit).Value, "\"", "", -1)
 						if !strutils.IsSnakeCase(firstArg) {
 							fmt.Fprintf(os.Stderr,
-								"[%s] %s:%d Resource(\"%s\") is not snake case ('%s')\n",
+								"[%s] %s:%-4d Resource(\"%s\") is not snake case ('%s')\n",
 								color.YellowString("WARN"),
 								filepath,
 								fset.Position(node.Fun.(*ast.Ident).NamePos).Line,

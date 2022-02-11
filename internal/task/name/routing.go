@@ -31,7 +31,7 @@ func RoutingNameChecker(filepath string) {
 							"\"", "", -1)
 						if !strutils.IsChainCaseForRouting(firstArg) {
 							fmt.Fprintf(os.Stderr,
-								"[%s] %s:%d Routing(%s(\"%s\")) is not chain case ('%s')\n",
+								"[%s] %s:%-4d Routing(%s(\"%s\")) is not chain case ('%s')\n",
 								color.YellowString("WARN"),
 								filepath,
 								fset.Position(node.Fun.(*ast.Ident).NamePos).Line,

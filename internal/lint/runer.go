@@ -17,6 +17,7 @@ func Run() {
 
 	for _, f := range fileutils.ExtractDesignPackageFile(files) {
 		for _, v := range tasks {
+			f = pathutils.RemoveCWDPath(f)
 			v.Check(f)
 		}
 	}
