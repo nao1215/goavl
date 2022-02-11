@@ -5,6 +5,10 @@ import (
 	. "github.com/shogo82148/goa-v1/design/apidsl"
 )
 
+var _ = Resource("operands_ok", func() {
+	Attribute("ng")
+})
+
 // NameMedia is media type for sample
 var NameMedia = MediaType("application/vnd.name_media", func() {
 	Attribute("this_is_ok")

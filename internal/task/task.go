@@ -27,6 +27,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewAttributeNoExampleCheckerTask())
 	tasks = append(tasks, NewNoDescriptionCheckerTask())
 	tasks = append(tasks, NewViewSyntaxTask())
+	tasks = append(tasks, NewAttributeSyntaxTask())
 	return tasks
 }
 
@@ -40,6 +41,15 @@ func NewViewSyntaxTask() Task {
 	task := Task{
 		Name:  "View() syntax check",
 		Check: syntax.ViewSyntaxChecker,
+	}
+	return task
+}
+
+// NewAttributeSyntaxTask return task that check Attribute() function syntax
+func NewAttributeSyntaxTask() Task {
+	task := Task{
+		Name:  "Attribute() syntax check",
+		Check: syntax.AttributeSyntaxChecker,
 	}
 	return task
 }
