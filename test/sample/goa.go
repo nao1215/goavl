@@ -5,6 +5,11 @@ import (
 	. "github.com/shogo82148/goa-v1/design/apidsl"
 )
 
+var _ = API("API name", func() {
+	Title("title")
+	Description("description")
+})
+
 var _ = Resource("operandsNG", func() {
 	Action("add-Ng", func() {
 		Routing(GET("add_ng/:left/:right"))

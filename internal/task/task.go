@@ -25,7 +25,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewRoutingNameCheckerTask())
 	tasks = append(tasks, NewAttributeNameCheckerTask())
 	tasks = append(tasks, NewAttributeNoExampleCheckerTask())
-	tasks = append(tasks, NewAttributeNoDescriptionCheckerTask())
+	tasks = append(tasks, NewNoDescriptionCheckerTask())
 	tasks = append(tasks, NewViewSyntaxTask()) // Not implement
 	return tasks
 }
@@ -89,11 +89,11 @@ func NewAttributeNoExampleCheckerTask() Task {
 	return task
 }
 
-// NewAttributeNoDescriptionCheckerTask return task that check whether description of Attribute() is written.
-func NewAttributeNoDescriptionCheckerTask() Task {
+// NewNoDescriptionCheckerTask return task that check whether description exist.
+func NewNoDescriptionCheckerTask() Task {
 	task := Task{
 		Name:  "Check whether Description() is written",
-		Check: syntax.AttributeNoDescriptionChecker,
+		Check: syntax.NoDescriptionChecker,
 	}
 	return task
 }

@@ -91,6 +91,7 @@ $ goavl
 - Example()を必ず記載する事
 
 ## Description()の有無チェック
+API(), Resource(), Action(), MediaType(), Attribute(), Response(), ResponseTemplate()の中にDescription()がない場合は、警告が出ます。
 ```
 var DescriptionMedia = MediaType("application/vnd.description_media", func() {
 	Attribute("ok")
