@@ -16,56 +16,17 @@ goavlは、**goa version 1 のみをサポート**し、現行のversion 3 は�
 ```
 $ go install github.com/nao1215/goavl@latest
 ```
-
-# 開発進捗
-### 作成完了：命名規則チェック（チェック対象一覧）
-- Resource()の引数
-- Action()の引数
-- Routing()の引数
-- Attribute()の引数
-
-### 作成予定
-- Type()の変数名、引数の命名規則チェック
-- MediaType()の変数名、引数の命名規則チェック
-- View()の構文チェック（使用できない関数内での呼び出しがないかどうか）
-
 ### 実行例
-goavlはカレントディレクトリ以下にあるdesignパッケージ（goファイル）を抽出し、そのファイルに対してチェックを行います。
+goavlはカレントディレクトリ以下にあるdesignパッケージ（goファイル）を抽出し、そのファイルに対してチェックを行います。より詳細な例が知りたい方は、[example.md](./doc/example.md)をご確認ください。
 ```
-$ cat test/sample/goa.go     ※ チェック対象のファイル内容を表示
-package design
-
-import (
-        . "github.com/shogo82148/goa-v1/design"
-        . "github.com/shogo82148/goa-v1/design/apidsl"
-)
-
-var _ = Resource("operandsNG", func() {
-        Action("add-Ng", func() {
-                Routing(GET("add_ng/:left/:right"))
-                Description("add returns the sum of the left and right parameters in the response body")
-                Params(func() {
-                        Param("left", Integer, "Left operand")
-                        Param("right", Integer, "Right operand")
-                })
-                Response(OK, "text/plain")
-        })
-})
-
-// TestMedia is media type for test
-var TestMedia = MediaType("application/vnd.test_media", func() {
-        Attribute("AbcDefID")
-        Attribute("zzzXXX-ss", String, func() {
-                NoExample()
-        })
-})
-
-$ ./goavl 
+$ goavl 
 [WARN] test/sample/goa.go:8    Resource("operandsNG") is not snake case ('operands_ng')
 [WARN] test/sample/goa.go:9    Action("add-Ng") is not snake case ('add_ng')
 [WARN] test/sample/goa.go:10   Routing(GET("add_ng/:left/:right")) is not chain case ('add-ng/:left/:right')
 [WARN] test/sample/goa.go:22   Attribute("AbcDefID") is not snake case ('abc_def_id')
 [WARN] test/sample/goa.go:23   Attribute("zzzXXX-ss") is not snake case ('zzz_xxx_ss')
+[WARN] test/sample/goa.go:24   NoExample() in Attribute(). NoExample() is not user(client) friendly
+[WARN] test/sample/goa.go:26   Not exist Example() in Attribute().
 ```
 
 # ライセンス
