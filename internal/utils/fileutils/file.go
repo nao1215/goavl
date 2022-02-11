@@ -3,11 +3,18 @@ package fileutils
 import (
 	"go/parser"
 	"go/token"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/nao1215/goavl/internal/utils/ioutils"
 )
+
+// IsFile reports whether the path exists and is a file.
+func IsFile(path string) bool {
+	stat, err := os.Stat(path)
+	return (err == nil) && (!stat.IsDir())
+}
 
 // Walk returns  files under the certain directory (target directory)
 func Walk(target string) ([]string, error) {
@@ -27,8 +34,8 @@ func Walk(target string) ([]string, error) {
 	return files, nil
 }
 
-// extractGoFile extract go file in filepath list.
-func extractGoFile(files []string) []string {
+// ExtractGoFile extract go file in filepath list.
+func ExtractGoFile(files []string) []string {
 	f := []string{}
 	for _, v := range files {
 		if strings.HasSuffix(v, ".go") {
@@ -40,14 +47,14 @@ func extractGoFile(files []string) []string {
 
 // ExtractDesignPackageFile extract goa-design package.
 func ExtractDesignPackageFile(files []string) []string {
-	files = extractGoFile(files)
+	files = ExtractGoFile(files)
 	extractFiles := []string{}
 
 	for _, filepath := range files {
 		fset := token.NewFileSet()
 		f, err := parser.ParseFile(fset, filepath, nil, 0)
 		if err != nil {
-			log.Fatal(err)
+			ioutils.Die(err.Error())
 		}
 
 		// design package or not

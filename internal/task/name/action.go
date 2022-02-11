@@ -5,10 +5,11 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"log"
 	"os"
 	"strings"
 
+	"github.com/fatih/color"
+	"github.com/nao1215/goavl/internal/utils/ioutils"
 	"github.com/nao1215/goavl/internal/utils/strutils"
 )
 
@@ -17,7 +18,7 @@ func ActionNameChecker(filepath string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
-		log.Fatal(err)
+		ioutils.Die(err.Error())
 	}
 	for _, decl := range f.Decls {
 		switch d := decl.(type) {
@@ -31,7 +32,9 @@ func ActionNameChecker(filepath string) {
 							case *ast.BasicLit:
 								firstArg := strings.Replace(bl.Value, "\"", "", -1)
 								if !strutils.IsSnakeCase(firstArg) {
-									fmt.Fprintf(os.Stderr, "%s:%d Action(\"%s\") is not snake case ('%s')\n",
+									fmt.Fprintf(os.Stderr,
+										"[%s] %s:%d Action(\"%s\") is not snake case ('%s')\n",
+										color.YellowString("WARN"),
 										filepath,
 										fset.Position(node.Fun.(*ast.Ident).NamePos).Line,
 										firstArg,

@@ -5,10 +5,11 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"log"
 	"os"
 	"strings"
 
+	"github.com/fatih/color"
+	"github.com/nao1215/goavl/internal/utils/ioutils"
 	"github.com/nao1215/goavl/internal/utils/strutils"
 )
 
@@ -17,7 +18,7 @@ func ResourceNameChecker(filepath string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
-		log.Fatal(err)
+		ioutils.Die(err.Error())
 	}
 	for _, decl := range f.Decls {
 		switch d := decl.(type) {
@@ -28,7 +29,9 @@ func ResourceNameChecker(filepath string) {
 					if node.Fun.(*ast.Ident).Name == "Resource" {
 						firstArg := strings.Replace(node.Args[0].(*ast.BasicLit).Value, "\"", "", -1)
 						if !strutils.IsSnakeCase(firstArg) {
-							fmt.Fprintf(os.Stderr, "%s:%d Resource(\"%s\") is not snake case ('%s')\n",
+							fmt.Fprintf(os.Stderr,
+								"[%s] %s:%d Resource(\"%s\") is not snake case ('%s')\n",
+								color.YellowString("WARN"),
 								filepath,
 								fset.Position(node.Fun.(*ast.Ident).NamePos).Line,
 								firstArg,

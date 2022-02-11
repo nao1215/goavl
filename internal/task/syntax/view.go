@@ -5,7 +5,8 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"log"
+
+	"github.com/nao1215/goavl/internal/utils/ioutils"
 )
 
 // ViewSyntaxChecker check View() function syntax
@@ -13,7 +14,7 @@ func ViewSyntaxChecker(filepath string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
-		log.Fatal(err)
+		ioutils.Die(err.Error())
 	}
 	for _, decl := range f.Decls {
 		switch d := decl.(type) {
@@ -23,5 +24,4 @@ func ViewSyntaxChecker(filepath string) {
 			fmt.Println("function declaration:", d.Body.List)
 		}
 	}
-	//ast.Print(fset, f)
 }

@@ -1,6 +1,7 @@
 package task
 
 import (
+	"github.com/nao1215/goavl/internal/task/debug"
 	"github.com/nao1215/goavl/internal/task/name"
 	"github.com/nao1215/goavl/internal/task/syntax"
 )
@@ -63,6 +64,15 @@ func NewRoutingNameCheckerTask() Task {
 	task := Task{
 		Name:  "Routing() argument name checker",
 		Check: name.RoutingNameChecker,
+	}
+	return task
+}
+
+// NewPrintASTTask return task that print abstract syntax tree of the go file.
+func NewPrintASTTask() Task {
+	task := Task{
+		Name:  "Print ast tree",
+		Check: debug.PrintAST,
 	}
 	return task
 }
