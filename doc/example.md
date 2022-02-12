@@ -89,7 +89,8 @@ $ goavl
 # 構文チェック
 - Description()を必ず記載する事
 - Example()を必ず記載する事
-- 使用可能な関数内でView()が使用されているか
+- View()：使用可能な関数内で使用されているか
+- Attribute()：使用可能な関数内で使用されているか
 
 ## Description()の有無チェック
 API(), Resource(), Action(), MediaType(), Attribute(), Response(), ResponseTemplate()の中にDescription()がない場合は、警告が出ます。

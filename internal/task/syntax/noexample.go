@@ -42,7 +42,7 @@ func checkAttributeNoExample(filepath string, fset *token.FileSet, decl ast.Decl
 								hasExampleOrNoExample = true
 							} else if n.Name == "NoExample" {
 								fmt.Fprintf(os.Stderr,
-									"[%s] %s:%-4d NoExample() in Attribute(). NoExample() is not user(client) friendly\n",
+									"[%s] %s:%-4d NoExample() is not user(client) friendly. you use Example()\n",
 									color.YellowString("WARN"),
 									filepath,
 									fset.Position(n.NamePos).Line)

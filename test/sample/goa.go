@@ -43,5 +43,6 @@ var TestMedia = MediaType("application/vnd.test_media", func() {
 
 // TestType is type
 var TestType = Type("TestType", func() {
+	Default("ng")
 	View("ng")
 })
