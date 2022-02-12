@@ -33,11 +33,14 @@ var TestMedia = MediaType("application/vnd.test_media", func() {
 	})
 	Attribute("with_example", String, func() {
 		Example("Ok case")
+		Enum("ng")
 	})
 
 	Attributes(func() {
 		Attribute("test")
 		View("ng")
+		Default("ng")
+		Enum("ng")
 	})
 })
 

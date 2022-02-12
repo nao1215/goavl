@@ -29,6 +29,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewViewSyntaxTask())
 	tasks = append(tasks, NewAttributeSyntaxTask())
 	tasks = append(tasks, NewDefaultSyntaxTask())
+	tasks = append(tasks, NewEnumSyntaxTask())
 	return tasks
 }
 
@@ -60,6 +61,15 @@ func NewDefaultSyntaxTask() Task {
 	task := Task{
 		Name:  "Default() syntax check",
 		Check: syntax.DefaultSyntaxChecker,
+	}
+	return task
+}
+
+// NewEnumSyntaxTask return task that check Enum() function syntax
+func NewEnumSyntaxTask() Task {
+	task := Task{
+		Name:  "Enum() syntax check",
+		Check: syntax.EnumSyntaxChecker,
 	}
 	return task
 }
