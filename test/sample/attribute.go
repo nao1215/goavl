@@ -29,4 +29,8 @@ var SampleMedia = MediaType("application/vnd.sample_media", func() {
 	Attribute("ng", String, func() {
 		Description("no example in Attribute()")
 	})
+	Attributes(func() {
+		Attribute("ok")
+		View("ng")
+	})
 })

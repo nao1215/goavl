@@ -8,7 +8,9 @@ import (
 	"os"
 
 	"github.com/fatih/color"
+	"github.com/nao1215/goavl/internal/utils/goautils"
 	"github.com/nao1215/goavl/internal/utils/ioutils"
+	"github.com/nao1215/goavl/internal/utils/strutils"
 )
 
 // ViewSyntaxChecker check View() function syntax
@@ -24,14 +26,13 @@ func ViewSyntaxChecker(filepath string) {
 }
 
 func checkView(filepath string, fset *token.FileSet, decl ast.Decl) {
-	// View can be used in: MediaType, Response
-	ngFuncs := []string{
-		"API",
-		"Resource",
-		"Action",
-		"Attribute",
-		"Attributes",
-		"Type",
+	okFuns := []string{
+		"MediaType", "Response",
+	}
+
+	targets := goautils.CheckTargetFunctionList()
+	for _, v := range okFuns {
+		targets = strutils.Remove(targets, v)
 	}
 
 	switch d := decl.(type) {
@@ -39,13 +40,11 @@ func checkView(filepath string, fset *token.FileSet, decl ast.Decl) {
 		ast.Inspect(d, func(node ast.Node) bool {
 			switch node := node.(type) {
 			case *ast.CallExpr:
-				for _, function := range ngFuncs {
+				for _, function := range targets {
 					if node.Fun.(*ast.Ident).Name == function {
-						if len(node.Args) == 1 && function != "Attributes" {
-							// If function has only one Argument, e.g. Attribute("test")
+						if goautils.NotWarnSyntaxCheck(node.Args, function) {
 							return true
 						}
-
 						ast.Inspect(node, func(n ast.Node) bool {
 							switch n := n.(type) {
 							case *ast.Ident:

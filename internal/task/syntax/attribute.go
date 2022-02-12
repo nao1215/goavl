@@ -8,7 +8,9 @@ import (
 	"os"
 
 	"github.com/fatih/color"
+	"github.com/nao1215/goavl/internal/utils/goautils"
 	"github.com/nao1215/goavl/internal/utils/ioutils"
+	"github.com/nao1215/goavl/internal/utils/strutils"
 )
 
 // AttributeSyntaxChecker check View() function syntax
@@ -24,12 +26,14 @@ func AttributeSyntaxChecker(filepath string) {
 }
 
 func checkAttribute(filepath string, fset *token.FileSet, decl ast.Decl) {
-	// Attribute can be used in: View, Type, Attribute, Attributes
-	ngFuncs := []string{
-		"API",
-		"Resource",
-		"Action",
-		//"MediaType", ドキュメントには書いていないが使える
+	okFuncs := []string{
+		"View", "Type", "Attribute", "Attributes",
+		"MediaType", // ドキュメントには書いていないが使える
+	}
+
+	functions := goautils.CheckTargetFunctionList()
+	for _, v := range okFuncs {
+		functions = strutils.Remove(functions, v)
 	}
 
 	switch d := decl.(type) {
@@ -37,10 +41,9 @@ func checkAttribute(filepath string, fset *token.FileSet, decl ast.Decl) {
 		ast.Inspect(d, func(node ast.Node) bool {
 			switch node := node.(type) {
 			case *ast.CallExpr:
-				for _, function := range ngFuncs {
+				for _, function := range functions {
 					if node.Fun.(*ast.Ident).Name == function {
-						if len(node.Args) == 1 && function != "Attributes" {
-							// If function has only one Argument, e.g. Attribute("test")
+						if goautils.NotWarnSyntaxCheck(node.Args, function) {
 							return true
 						}
 
