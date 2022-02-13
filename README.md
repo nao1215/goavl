@@ -1,3 +1,6 @@
+[![Build](https://github.com/nao1215/goavl/actions/workflows/build.yml/badge.svg)](https://github.com/nao1215/goavl/actions/workflows/build.yml)
+[![UnitTest](https://github.com/nao1215/goavl/actions/workflows/unit_test.yml/badge.svg)](https://github.com/nao1215/goavl/actions/workflows/unit_test.yml)
+
 # goavl: Goa framework (ver1) linter
 goavlは、[goa version1（フォーク版）](https://github.com/shogo82148/goa-v1)のlinterです。開発目的は、goaを用いたWeb APIデザイン設計速度を早め、チーム内でのデザイン差異を極力小さくする事です。
 
