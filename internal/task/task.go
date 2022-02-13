@@ -31,6 +31,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewEnumSyntaxTask())
 	tasks = append(tasks, NewExampleSyntaxTask())
 	tasks = append(tasks, NewFormatSyntaxTask())
+	tasks = append(tasks, NewHeaderSyntaxTask())
 	tasks = append(tasks, NewViewSyntaxTask())
 	return tasks
 }
@@ -90,6 +91,15 @@ func NewFormatSyntaxTask() Task {
 	task := Task{
 		Name:  "Format() syntax check",
 		Check: syntax.FormatSyntaxChecker,
+	}
+	return task
+}
+
+// NewHeaderSyntaxTask return task that check Format() function syntax
+func NewHeaderSyntaxTask() Task {
+	task := Task{
+		Name:  "Header() syntax check",
+		Check: syntax.HeaderSyntaxChecker,
 	}
 	return task
 }
