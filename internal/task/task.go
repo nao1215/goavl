@@ -34,6 +34,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewHeaderSyntaxTask())
 	tasks = append(tasks, NewMaxLengthSyntaxTask())
 	tasks = append(tasks, NewMaximumSyntaxTask())
+	tasks = append(tasks, NewMinLengthSyntaxTask())
 	tasks = append(tasks, NewViewSyntaxTask())
 	return tasks
 }
@@ -129,6 +130,15 @@ func NewMemberSyntaxTask() Task {
 	task := Task{
 		Name:  "Member() syntax check",
 		Check: syntax.MemberSyntaxChecker,
+	}
+	return task
+}
+
+// NewMinLengthSyntaxTask return task that check MinLength() function syntax
+func NewMinLengthSyntaxTask() Task {
+	task := Task{
+		Name:  "MinLength() syntax check",
+		Check: syntax.MinLengthSyntaxChecker,
 	}
 	return task
 }
