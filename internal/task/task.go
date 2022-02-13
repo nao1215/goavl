@@ -35,6 +35,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewMaxLengthSyntaxTask())
 	tasks = append(tasks, NewMaximumSyntaxTask())
 	tasks = append(tasks, NewMinLengthSyntaxTask())
+	tasks = append(tasks, NewMinimumSyntaxTask())
 	tasks = append(tasks, NewViewSyntaxTask())
 	return tasks
 }
@@ -139,6 +140,15 @@ func NewMinLengthSyntaxTask() Task {
 	task := Task{
 		Name:  "MinLength() syntax check",
 		Check: syntax.MinLengthSyntaxChecker,
+	}
+	return task
+}
+
+// NewMinimumSyntaxTask return task that check Minimum() function syntax
+func NewMinimumSyntaxTask() Task {
+	task := Task{
+		Name:  "Minimum() syntax check",
+		Check: syntax.MinimumSyntaxChecker,
 	}
 	return task
 }
