@@ -54,6 +54,9 @@ var TestType = Type("TestType", func() {
 var BugType = Type("bug", func() {
 	Attributes(func() {
 		View("bug")
+		Example("ng")
 	})
+
+	Example("ng")
 	View("bug")
 })

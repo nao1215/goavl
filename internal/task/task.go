@@ -26,10 +26,11 @@ func Setup() []Task {
 	tasks = append(tasks, NewAttributeNameCheckerTask())
 	tasks = append(tasks, NewAttributeNoExampleCheckerTask())
 	tasks = append(tasks, NewNoDescriptionCheckerTask())
-	tasks = append(tasks, NewViewSyntaxTask())
 	tasks = append(tasks, NewAttributeSyntaxTask())
 	tasks = append(tasks, NewDefaultSyntaxTask())
 	tasks = append(tasks, NewEnumSyntaxTask())
+	tasks = append(tasks, NewExampleSyntaxTask())
+	tasks = append(tasks, NewViewSyntaxTask())
 	return tasks
 }
 
@@ -70,6 +71,15 @@ func NewEnumSyntaxTask() Task {
 	task := Task{
 		Name:  "Enum() syntax check",
 		Check: syntax.EnumSyntaxChecker,
+	}
+	return task
+}
+
+// NewExampleSyntaxTask return task that check Example() function syntax
+func NewExampleSyntaxTask() Task {
+	task := Task{
+		Name:  "Example() syntax check",
+		Check: syntax.ExampleSyntaxChecker,
 	}
 	return task
 }
