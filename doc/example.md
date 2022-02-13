@@ -89,8 +89,26 @@ $ goavl
 # 構文チェック
 - Description()を必ず記載する事
 - Example()を必ず記載する事
-- View()：使用可能な関数内で使用されているか
 - Attribute()：使用可能な関数内で使用されているか
+- Default()：使用可能な関数内で使用されているか
+- Enum()：使用可能な関数内で使用されているか
+- Example()：使用可能な関数内で使用されているか
+- Format()：使用可能な関数内で使用されているか
+- Header()：使用可能な関数内で使用されているか
+- MaxLength()：使用可能な関数内で使用されているか
+- Maximum()：使用可能な関数内で使用されているか
+- Member()：使用可能な関数内で使用されているか
+- MinLength()：使用可能な関数内で使用されているか
+- Minimum()：使用可能な関数内で使用されているか
+- MultipartForm()：使用可能な関数内で使用されているか
+- NoExample()：使用可能な関数内で使用されているか
+- Param()：使用可能な関数内で使用されているか
+- Pattern()：使用可能な関数内で使用されているか
+- ReadOnly()：使用可能な関数内で使用されているか
+- Required()：使用可能な関数内で使用されているか
+- TypeName()：使用可能な関数内で使用されているか
+- URL()：使用可能な関数内で使用されているか
+- View()：使用可能な関数内で使用されているか
 
 ## Description()の有無チェック
 API(), Resource(), Action(), MediaType(), Attribute(), Response(), ResponseTemplate()の中にDescription()がない場合は、警告が出ます。
