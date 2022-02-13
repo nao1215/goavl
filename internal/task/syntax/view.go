@@ -35,6 +35,7 @@ func checkView(filepath string, fset *token.FileSet, decl ast.Decl) {
 		targets = strutils.Remove(targets, v)
 	}
 
+	result := map[int]string{}
 	switch d := decl.(type) {
 	case *ast.GenDecl:
 		ast.Inspect(d, func(node ast.Node) bool {
@@ -45,12 +46,12 @@ func checkView(filepath string, fset *token.FileSet, decl ast.Decl) {
 						if goautils.NotWarnSyntaxCheck(node.Args, function) {
 							return true
 						}
+
 						ast.Inspect(node, func(n ast.Node) bool {
 							switch n := n.(type) {
 							case *ast.Ident:
 								if n.Name == "View" {
-									fmt.Fprintf(os.Stderr,
-										"[%s] %s:%-4d %s() has View(). View() can be used in MediaType() or Response()\n",
+									result[fset.Position(n.NamePos).Line] = fmt.Sprintf("[%s] %s:%-4d %s() has View(). View() can be used in MediaType() or Response()\n",
 										color.YellowString("WARN"),
 										filepath,
 										fset.Position(n.NamePos).Line,
@@ -64,5 +65,8 @@ func checkView(filepath string, fset *token.FileSet, decl ast.Decl) {
 			}
 			return true
 		})
+	}
+	for _, v := range result {
+		fmt.Fprint(os.Stderr, v)
 	}
 }

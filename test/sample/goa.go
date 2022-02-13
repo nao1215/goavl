@@ -42,10 +42,18 @@ var TestMedia = MediaType("application/vnd.test_media", func() {
 		Default("ng")
 		Enum("ng")
 	})
+	Default("ng")
 })
 
 // TestType is type
 var TestType = Type("TestType", func() {
 	Default("ng")
 	View("ng")
+})
+
+var BugType = Type("bug", func() {
+	Attributes(func() {
+		View("bug")
+	})
+	View("bug")
 })

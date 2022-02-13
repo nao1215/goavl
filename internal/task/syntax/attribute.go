@@ -36,6 +36,7 @@ func checkAttribute(filepath string, fset *token.FileSet, decl ast.Decl) {
 		functions = strutils.Remove(functions, v)
 	}
 
+	result := map[int]string{}
 	switch d := decl.(type) {
 	case *ast.GenDecl:
 		ast.Inspect(d, func(node ast.Node) bool {
@@ -51,7 +52,7 @@ func checkAttribute(filepath string, fset *token.FileSet, decl ast.Decl) {
 							switch n := n.(type) {
 							case *ast.Ident:
 								if n.Name == "Attribute" {
-									fmt.Fprintf(os.Stderr,
+									result[fset.Position(n.NamePos).Line] = fmt.Sprintf(
 										"[%s] %s:%-4d %s() has Attribute(). Attribute() can be used in View(), Type(), Attribute(), Attributes(), MediaType()\n",
 										color.YellowString("WARN"),
 										filepath,
@@ -66,5 +67,8 @@ func checkAttribute(filepath string, fset *token.FileSet, decl ast.Decl) {
 			}
 			return true
 		})
+	}
+	for _, v := range result {
+		fmt.Fprint(os.Stderr, v)
 	}
 }
