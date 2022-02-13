@@ -40,6 +40,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewNoExampleSyntaxCheckerTask())
 	tasks = append(tasks, NewParamSyntaxCheckerTask())
 	tasks = append(tasks, NewPatternSyntaxCheckerTask())
+	tasks = append(tasks, NewReadOnlySyntaxCheckerTask())
 	tasks = append(tasks, NewViewSyntaxTask())
 	return tasks
 }
@@ -189,6 +190,15 @@ func NewPatternSyntaxCheckerTask() Task {
 	task := Task{
 		Name:  "Pattern() syntax check",
 		Check: syntax.PatternSyntaxChecker,
+	}
+	return task
+}
+
+// NewReadOnlySyntaxCheckerTask return task that check ReadOnly() function syntax
+func NewReadOnlySyntaxCheckerTask() Task {
+	task := Task{
+		Name:  "ReadOnly() syntax check",
+		Check: syntax.ReadOnlySyntaxChecker,
 	}
 	return task
 }
