@@ -43,6 +43,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewReadOnlySyntaxCheckerTask())
 	tasks = append(tasks, NewRequiredSyntaxCheckerTask())
 	tasks = append(tasks, NewTypeNameSyntaxCheckerTask())
+	tasks = append(tasks, NewURLSyntaxCheckerTask())
 	tasks = append(tasks, NewViewSyntaxTask())
 	return tasks
 }
@@ -219,6 +220,15 @@ func NewTypeNameSyntaxCheckerTask() Task {
 	task := Task{
 		Name:  "TypeName() syntax check",
 		Check: syntax.TypeNameSyntaxChecker,
+	}
+	return task
+}
+
+// NewURLSyntaxCheckerTask return task that check URL() function syntax
+func NewURLSyntaxCheckerTask() Task {
+	task := Task{
+		Name:  "URL() syntax check",
+		Check: syntax.URLSyntaxChecker,
 	}
 	return task
 }
