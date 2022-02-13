@@ -32,19 +32,26 @@ func syntaxCheck(filepath string, fset *token.FileSet, decl ast.Decl, targetFunc
 
 						ast.Inspect(node, func(n ast.Node) bool {
 							switch n := n.(type) {
-							case *ast.Ident:
-								if n.Name == targetFunc {
-									result[fset.Position(n.NamePos).Line] = fmt.Sprintf(
-										"[%s] %s:%-4d %s() has %s(). %s() can be used in %s\n",
-										color.YellowString("WARN"),
-										filepath,
-										fset.Position(n.NamePos).Line,
-										function,
-										targetFunc,
-										targetFunc,
-										strings.Join(okFuncs, ", "),
-									)
+							case *ast.BlockStmt:
+								for _, v := range n.List {
+									switch v := v.(type) {
+									case *ast.ExprStmt:
+										ident := v.X.(*ast.CallExpr).Fun.(*ast.Ident)
+										if ident.Name == targetFunc {
+											result[fset.Position(ident.NamePos).Line] = fmt.Sprintf(
+												"[%s] %s:%-4d %s() has %s(). %s() can be used in %s\n",
+												color.YellowString("WARN"),
+												filepath,
+												fset.Position(ident.NamePos).Line,
+												function,
+												targetFunc,
+												targetFunc,
+												strings.Join(okFuncs, ", "),
+											)
+										}
+									}
 								}
+								return false // Only check first Block.
 							}
 							return true
 						})

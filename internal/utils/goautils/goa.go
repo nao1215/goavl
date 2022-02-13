@@ -79,7 +79,7 @@ func CheckTargetFunctionList() []string {
 		//"Query", // func Query(parameterName string)
 		//"ReadOnly", // func ReadOnly()
 		//"Reference", // func Reference(t design.DataType)
-		"Required",         // func Required(names ...string)
+		//"Required",         // func Required(names ...string)
 		"Resource",         // func Resource(name string, dsl func()) *design.ResourceDefinition
 		"Response",         // func Response(name string, paramsAndDSL ...interface{})
 		"ResponseTemplate", // func ResponseTemplate(name string, p interface{})
@@ -121,6 +121,68 @@ func NotWarnSyntaxCheck(args []ast.Expr, funcName string) bool {
 
 	for _, f := range funcs {
 		if funcName == f {
+			return true
+		}
+	}
+	return false
+}
+
+// IsNoRecursive returns whether the function does not require recursive checking
+func IsNoRecursive(funcName string) bool {
+	funcs := []string{
+		"API",               // func API(name string, dsl func()) *design.APIDefinition
+		"APIKeySecurity",    // func APIKeySecurity(name string, dsl ...func()) *design.SecuritySchemeDefinition
+		"Action",            // func Action(name string, dsl func())
+		"ArrayOf",           // func ArrayOf(v interface{}, dsl ...func()) *design.Array
+		"Attribute",         // func Attribute(name string, args ...interface{})
+		"Attributes",        // func Attributes(apidsl func())
+		"BasicAuthSecurity", // func BasicAuthSecurity(name string, dsl ...func()) *design.SecuritySchemeDefinition
+		"CONNECT",           // func CONNECT(path string, dsl ...func()) *design.RouteDefinition
+		"CollectionOf",      // func CollectionOf(v interface{}, paramAndDSL ...interface{}) *design.MediaTypeDefinition
+		"Consumes",          // func Consumes(args ...interface{})
+		"Contact",           // func Contact(dsl func())
+		"DELETE",            // func DELETE(path string, dsl ...func()) *design.RouteDefinitio
+		"Default",           // func Default(def interface{})
+		"DefaultMedia",      // func DefaultMedia(val interface{}, viewName ...string)
+		"Docs",              // func Docs(dsl func())
+		"Enum",              // func Enum(val ...interface{})
+		"Example",           // func Example(exp interface{})
+		"Files",             // func Files(path, filename string, dsls ...func())
+		"GET",               // func GET(path string, dsl ...func()) *design.RouteDefinition
+		"HEAD",              // func HEAD(path string, dsl ...func()) *design.RouteDefinition
+		"HashOf",            // func HashOf(k, v interface{}, dsls ...func()) *design.Hash
+		"Header",            // func Header(name string, args ...interface{})
+		"Headers",           // func Headers(params ...interface{})
+		"JWTSecurity",       // func JWTSecurity(name string, dsl ...func()) *design.SecuritySchemeDefinition
+		"License",           // func License(dsl func())
+		"Links",             // func Links(apidsl func())
+		"Maximum",           // func Maximum(val interface{})
+		"Media",             // func Media(val interface{}, viewName ...string)
+		"MediaType",         // func MediaType(identifier string, apidsl func()) *design.MediaTypeDefinition
+		"Member",            // func Member(name string, args ...interface{})
+		"OAuth2Security",    // func OAuth2Security(name string, dsl ...func()) *design.SecuritySchemeDefinition
+		"OPTIONS",           // func OPTIONS(path string, dsl ...func()) *design.RouteDefinition
+		"OptionalPayload",   // func OptionalPayload(p interface{}, dsls ...func())
+		"Origin",            // func Origin(origin string, dsl func())
+		"PATCH",             // func PATCH(path string, dsl ...func()) *design.RouteDefinition
+		"POST",              // func POST(path string, dsl ...func()) *design.RouteDefinition
+		"PUT",               // func PUT(path string, dsl ...func()) *design.RouteDefinition
+		"Param",             // func Param(name string, args ...interface{})
+		"Params",            // func Params(dsl func())
+		"Payload",           // func Payload(p interface{}, dsls ...func())
+		"Produces",          // func Produces(args ...interface{})
+		//"Required",          // func Required(names ...string)
+		"Resource",         // func Resource(name string, dsl func()) *design.ResourceDefinition
+		"Response",         // func Response(name string, paramsAndDSL ...interface{})
+		"ResponseTemplate", // func ResponseTemplate(name string, p interface{})
+		"Security",         // func Security(scheme interface{}, dsl ...func())
+		"TRACE",            // func TRACE(path string, dsl ...func()) *design.RouteDefinition
+		"Trait",            // func Trait(name string, val ...func())
+		"Type",             // func Type(name string, dsl func()) *design.UserTypeDefinition
+		"View",             // func View(name string, apidsl ...func())
+	}
+	for _, v := range funcs {
+		if funcName == v {
 			return true
 		}
 	}
