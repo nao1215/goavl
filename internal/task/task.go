@@ -32,6 +32,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewExampleSyntaxTask())
 	tasks = append(tasks, NewFormatSyntaxTask())
 	tasks = append(tasks, NewHeaderSyntaxTask())
+	tasks = append(tasks, NewMaxLengthTask())
 	tasks = append(tasks, NewViewSyntaxTask())
 	return tasks
 }
@@ -100,6 +101,15 @@ func NewHeaderSyntaxTask() Task {
 	task := Task{
 		Name:  "Header() syntax check",
 		Check: syntax.HeaderSyntaxChecker,
+	}
+	return task
+}
+
+// NewMaxLengthTask return task that check MaxLength() function syntax
+func NewMaxLengthTask() Task {
+	task := Task{
+		Name:  "MaxLength() syntax check",
+		Check: syntax.MaxLengthChecker,
 	}
 	return task
 }
