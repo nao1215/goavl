@@ -37,6 +37,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewMinLengthSyntaxTask())
 	tasks = append(tasks, NewMinimumSyntaxTask())
 	tasks = append(tasks, NewMultipartFormSyntaxTask())
+	tasks = append(tasks, NewNoExampleSyntaxCheckerTask())
 	tasks = append(tasks, NewViewSyntaxTask())
 	return tasks
 }
@@ -159,6 +160,15 @@ func NewMultipartFormSyntaxTask() Task {
 	task := Task{
 		Name:  "MultipartForm() syntax check",
 		Check: syntax.MultipartFormSyntaxChecker,
+	}
+	return task
+}
+
+// NewNoExampleSyntaxCheckerTask return task that check NoExample() function syntax
+func NewNoExampleSyntaxCheckerTask() Task {
+	task := Task{
+		Name:  "NoExample() syntax check",
+		Check: syntax.NoExampleSyntaxChecker,
 	}
 	return task
 }
