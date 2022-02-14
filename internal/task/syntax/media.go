@@ -8,13 +8,13 @@ import (
 )
 
 // MediaSyntaxChecker check Media() function syntax
-func MediaSyntaxChecker(filepath string) {
+func MediaSyntaxChecker(filepath, inspectionID string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
 		ioutils.Die(err.Error())
 	}
 	for _, decl := range f.Decls {
-		syntaxCheck(filepath, fset, decl, "Media", []string{"Response", "ResponseTemplate"})
+		syntaxCheck(filepath, inspectionID, fset, decl, "Media", []string{"Response", "ResponseTemplate"})
 	}
 }

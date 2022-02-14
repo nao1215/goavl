@@ -21,7 +21,7 @@ func Run(files, excludeIDs []string) {
 	for _, f := range fileutils.ExtractDesignPackageFile(files) {
 		f = pathutils.RemoveCWDPath(f)
 		for _, v := range tasks {
-			v.Check(f)
+			v.Check(f, v.InspectionID)
 		}
 	}
 }
@@ -43,7 +43,7 @@ func PrintAST(files []string) {
 			ioutils.Warn("no such file or directory exists: " + f)
 			continue
 		}
-		task.Check(f)
+		task.Check(f, task.InspectionID)
 	}
 }
 
@@ -67,6 +67,6 @@ func CheckOneFile(file string) {
 
 	tasks := task.Setup()
 	for _, v := range tasks {
-		v.Check(file)
+		v.Check(file, v.InspectionID)
 	}
 }

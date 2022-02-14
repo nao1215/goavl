@@ -24,13 +24,14 @@ $ go install github.com/nao1215/goavl@latest
 goavlはカレントディレクトリ以下にあるdesignパッケージ（goファイル）を抽出し、そのファイルに対してチェックを行います。より詳細な例が知りたい方は、[example.md](./doc/example.md)をご確認ください。
 ```
 $ goavl 
-[WARN] test/sample/goa.go:8    Resource("operandsNG") is not snake case ('operands_ng')
-[WARN] test/sample/goa.go:9    Action("add-Ng") is not snake case ('add_ng')
-[WARN] test/sample/goa.go:10   Routing(GET("add_ng/:left/:right")) is not chain case ('add-ng/:left/:right')
-[WARN] test/sample/goa.go:22   Attribute("AbcDefID") is not snake case ('abc_def_id')
-[WARN] test/sample/goa.go:23   Attribute("zzzXXX-ss") is not snake case ('zzz_xxx_ss')
-[WARN] test/sample/goa.go:24   NoExample() in Attribute(). NoExample() is not user(client) friendly
-[WARN] test/sample/goa.go:26   Not exist Example() in Attribute().
+[NC001] test/sample/action.go:7    Resource("operandsNG") is not snake case ('operands_ng')
+[NC002] test/sample/action.go:9    Action("add-ng") is not snake case ('add_ng')
+[UF002] test/sample/action.go:11   Not exist Description() in Action().
+[NC004] test/sample/attribute.go:15   Attribute("this-is-ng") is not snake case ('this_is_ng')
+[NC004] test/sample/attribute.go:16   Attribute("NgCase") is not snake case ('ng_case')
+[NC004] test/sample/attribute.go:17   Attribute("ngCase") is not snake case ('ng_case')
+[UF001] test/sample/attribute.go:15   Not exist Example() in Attribute().
+[FC023] test/sample/bug.go:10   Attributes() has View(). View() can be used in MediaType, Response
 ```
 ## ファイル1件のチェック
 -f（--file）オプションを使うと、チェック対象のファイルを指定できます。複数ファイルの指定は、出来ません。

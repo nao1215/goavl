@@ -12,7 +12,7 @@ import (
 	"github.com/nao1215/goavl/internal/utils/strutils"
 )
 
-func syntaxCheck(filepath string, fset *token.FileSet, decl ast.Decl, targetFunc string, okFuncs []string) {
+func syntaxCheck(filepath, inspectionID string, fset *token.FileSet, decl ast.Decl, targetFunc string, okFuncs []string) {
 	functions := goautils.CheckTargetFunctionList()
 	for _, v := range okFuncs {
 		functions = strutils.Remove(functions, v)
@@ -40,7 +40,7 @@ func syntaxCheck(filepath string, fset *token.FileSet, decl ast.Decl, targetFunc
 										if ident.Name == targetFunc {
 											result[fset.Position(ident.NamePos).Line] = fmt.Sprintf(
 												"[%s] %s:%-4d %s() has %s(). %s() can be used in %s\n",
-												color.YellowString("WARN"),
+												color.YellowString(inspectionID),
 												filepath,
 												fset.Position(ident.NamePos).Line,
 												function,

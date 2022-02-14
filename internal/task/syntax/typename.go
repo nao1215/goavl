@@ -8,14 +8,14 @@ import (
 )
 
 // TypeNameSyntaxChecker check TypeName() function syntax
-func TypeNameSyntaxChecker(filepath string) {
+func TypeNameSyntaxChecker(filepath, inspectionID string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
 		ioutils.Die(err.Error())
 	}
 	for _, decl := range f.Decls {
-		syntaxCheck(filepath, fset, decl, "TypeName",
+		syntaxCheck(filepath, inspectionID, fset, decl, "TypeName",
 			[]string{"MediaType"})
 	}
 }

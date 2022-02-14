@@ -14,7 +14,7 @@ import (
 )
 
 // ResourceNameChecker check variable name and argument name.
-func ResourceNameChecker(filepath string) {
+func ResourceNameChecker(filepath, inspectionID string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
@@ -22,11 +22,11 @@ func ResourceNameChecker(filepath string) {
 	}
 
 	for _, decl := range f.Decls {
-		checkResourceArgName(filepath, fset, decl)
+		checkResourceArgName(filepath, inspectionID, fset, decl)
 	}
 }
 
-func checkResourceArgName(filepath string, fset *token.FileSet, decl ast.Decl) {
+func checkResourceArgName(filepath, inspectionID string, fset *token.FileSet, decl ast.Decl) {
 	switch d := decl.(type) {
 	case *ast.GenDecl:
 		ast.Inspect(d, func(node ast.Node) bool {
@@ -40,7 +40,7 @@ func checkResourceArgName(filepath string, fset *token.FileSet, decl ast.Decl) {
 							if !strutils.IsSnakeCase(firstArg) {
 								fmt.Fprintf(os.Stderr,
 									"[%s] %s:%-4d Resource(\"%s\") is not snake case ('%s')\n",
-									color.YellowString("WARN"),
+									color.YellowString(inspectionID),
 									filepath,
 									fset.Position(node.Fun.(*ast.Ident).NamePos).Line,
 									firstArg,

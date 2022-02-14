@@ -8,14 +8,14 @@ import (
 )
 
 // URLSyntaxChecker check URL() function syntax
-func URLSyntaxChecker(filepath string) {
+func URLSyntaxChecker(filepath, inspectionID string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
 		ioutils.Die(err.Error())
 	}
 	for _, decl := range f.Decls {
-		syntaxCheck(filepath, fset, decl, "URL",
+		syntaxCheck(filepath, inspectionID, fset, decl, "URL",
 			[]string{"Contact", "License", "Docs"})
 	}
 }

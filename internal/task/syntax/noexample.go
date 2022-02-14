@@ -12,18 +12,18 @@ import (
 )
 
 // AttributeNoExampleChecker check Attribute () for which no example is given
-func AttributeNoExampleChecker(filepath string) {
+func AttributeNoExampleChecker(filepath, inspectionID string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
 		ioutils.Die(err.Error())
 	}
 	for _, decl := range f.Decls {
-		checkAttributeNoExample(filepath, fset, decl)
+		checkAttributeNoExample(filepath, inspectionID, fset, decl)
 	}
 }
 
-func checkAttributeNoExample(filepath string, fset *token.FileSet, decl ast.Decl) {
+func checkAttributeNoExample(filepath, inspectionID string, fset *token.FileSet, decl ast.Decl) {
 	switch d := decl.(type) {
 	case *ast.GenDecl:
 		ast.Inspect(d, func(node ast.Node) bool {
@@ -43,7 +43,7 @@ func checkAttributeNoExample(filepath string, fset *token.FileSet, decl ast.Decl
 							} else if n.Name == "NoExample" {
 								fmt.Fprintf(os.Stderr,
 									"[%s] %s:%-4d NoExample() is not user(client) friendly. you use Example()\n",
-									color.YellowString("WARN"),
+									color.YellowString(inspectionID),
 									filepath,
 									fset.Position(n.NamePos).Line)
 								hasExampleOrNoExample = true
@@ -54,7 +54,7 @@ func checkAttributeNoExample(filepath string, fset *token.FileSet, decl ast.Decl
 					if !hasExampleOrNoExample {
 						fmt.Fprintf(os.Stderr,
 							"[%s] %s:%-4d Not exist Example() in Attribute().\n",
-							color.YellowString("WARN"),
+							color.YellowString(inspectionID),
 							filepath,
 							fset.Position(node.X.(*ast.CallExpr).Fun.(*ast.Ident).NamePos).Line)
 					}

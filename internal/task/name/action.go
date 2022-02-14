@@ -14,7 +14,7 @@ import (
 )
 
 // ActionNameChecker check variable name and argument name.
-func ActionNameChecker(filepath string) {
+func ActionNameChecker(filepath, inspectionID string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
@@ -34,7 +34,7 @@ func ActionNameChecker(filepath string) {
 								if !strutils.IsSnakeCase(firstArg) {
 									fmt.Fprintf(os.Stderr,
 										"[%s] %s:%-4d Action(\"%s\") is not snake case ('%s')\n",
-										color.YellowString("WARN"),
+										color.YellowString(inspectionID),
 										filepath,
 										fset.Position(node.Fun.(*ast.Ident).NamePos).Line,
 										firstArg,

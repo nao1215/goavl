@@ -14,18 +14,18 @@ import (
 )
 
 // AttributeNameChecker check argument name.
-func AttributeNameChecker(filepath string) {
+func AttributeNameChecker(filepath, inspectionID string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
 		ioutils.Die(err.Error())
 	}
 	for _, decl := range f.Decls {
-		checkAttributeArgName(filepath, fset, decl)
+		checkAttributeArgName(filepath, inspectionID, fset, decl)
 	}
 }
 
-func checkAttributeArgName(filepath string, fset *token.FileSet, decl ast.Decl) {
+func checkAttributeArgName(filepath, inspectionID string, fset *token.FileSet, decl ast.Decl) {
 	switch d := decl.(type) {
 	case *ast.GenDecl:
 		ast.Inspect(d, func(node ast.Node) bool {
@@ -39,7 +39,7 @@ func checkAttributeArgName(filepath string, fset *token.FileSet, decl ast.Decl) 
 							if !strutils.IsSnakeCase(firstArg) {
 								fmt.Fprintf(os.Stderr,
 									"[%s] %s:%-4d Attribute(\"%s\") is not snake case ('%s')\n",
-									color.YellowString("WARN"),
+									color.YellowString(inspectionID),
 									filepath,
 									fset.Position(node.X.(*ast.CallExpr).Fun.(*ast.Ident).NamePos).Line,
 									firstArg,

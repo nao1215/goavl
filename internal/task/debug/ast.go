@@ -9,7 +9,7 @@ import (
 )
 
 // PrintAST print abstract syntax tree of the go file.
-func PrintAST(filepath string) {
+func PrintAST(filepath, inspectionID string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {

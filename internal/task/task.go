@@ -6,7 +6,7 @@ import (
 	"github.com/nao1215/goavl/internal/task/syntax"
 )
 
-type check func(filepath string)
+type check func(filepath, inspectionID string)
 
 // Task define one of the perspectives that Linter checks
 type Task struct {

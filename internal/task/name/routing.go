@@ -14,7 +14,7 @@ import (
 )
 
 // RoutingNameChecker check variable name and argument name.
-func RoutingNameChecker(filepath string) {
+func RoutingNameChecker(filepath, inspectionID string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
@@ -22,11 +22,11 @@ func RoutingNameChecker(filepath string) {
 	}
 
 	for _, decl := range f.Decls {
-		checkRoutingArgName(filepath, fset, decl)
+		checkRoutingArgName(filepath, inspectionID, fset, decl)
 	}
 }
 
-func checkRoutingArgName(filepath string, fset *token.FileSet, decl ast.Decl) {
+func checkRoutingArgName(filepath, inspectionID string, fset *token.FileSet, decl ast.Decl) {
 	switch d := decl.(type) {
 	case *ast.GenDecl:
 		ast.Inspect(d, func(node ast.Node) bool {
@@ -43,7 +43,7 @@ func checkRoutingArgName(filepath string, fset *token.FileSet, decl ast.Decl) {
 									if firstArg != "" && !strutils.IsChainCaseForRouting(firstArg) {
 										fmt.Fprintf(os.Stderr,
 											"[%s] %s:%-4d Routing(%s(\"%s\")) is not chain case ('%s')\n",
-											color.YellowString("WARN"),
+											color.YellowString(inspectionID),
 											filepath,
 											fset.Position(node.Fun.(*ast.Ident).NamePos).Line,
 											cl.Fun.(*ast.Ident).Name,

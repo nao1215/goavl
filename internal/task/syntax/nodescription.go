@@ -12,18 +12,18 @@ import (
 )
 
 // NoDescriptionChecker check whether description exist
-func NoDescriptionChecker(filepath string) {
+func NoDescriptionChecker(filepath, inspectionID string) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filepath, nil, 0)
 	if err != nil {
 		ioutils.Die(err.Error())
 	}
 	for _, decl := range f.Decls {
-		checkAttributeNoDescription(filepath, fset, decl)
+		checkAttributeNoDescription(filepath, inspectionID, fset, decl)
 	}
 }
 
-func checkAttributeNoDescription(filepath string, fset *token.FileSet, decl ast.Decl) {
+func checkAttributeNoDescription(filepath, inspectionID string, fset *token.FileSet, decl ast.Decl) {
 	// Description sets the definition description.
 	// Description can be called inside API, Resource, Action, MediaType, Attribute, Response or ResponseTemplate
 	funcs := []string{
@@ -60,7 +60,7 @@ func checkAttributeNoDescription(filepath string, fset *token.FileSet, decl ast.
 						if !hasDescription {
 							fmt.Fprintf(os.Stderr,
 								"[%s] %s:%-4d Not exist Description() in %s().\n",
-								color.YellowString("WARN"),
+								color.YellowString(inspectionID),
 								filepath,
 								fset.Position(node.X.(*ast.CallExpr).Fun.(*ast.Ident).NamePos).Line,
 								function)
