@@ -67,6 +67,9 @@ func IsDesignFile(file string) bool {
 	if err != nil {
 		return false
 	}
+	if f == nil {
+		return false
+	}
 
 	// design package or not
 	if f.Name.Name != "design" {
@@ -79,6 +82,9 @@ func IsDesignFile(file string) bool {
 	// Therefore, it is not possible to determine whether it is a goa-design file
 	// with the correct import path ("github.com/shogo82148/goa-v1/design").
 	for _, v := range f.Imports {
+		if v.Name == nil {
+			return false
+		}
 		if v.Name.Name == "." {
 			return true
 		}
