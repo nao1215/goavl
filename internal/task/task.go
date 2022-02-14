@@ -36,16 +36,20 @@ func Setup() []Task {
 	tasks = append(tasks, NewHeaderSyntaxTask())
 	tasks = append(tasks, NewMaxLengthSyntaxTask())
 	tasks = append(tasks, NewMaximumSyntaxTask())
+	tasks = append(tasks, NewMediaSyntaxTask())
+	tasks = append(tasks, NewMemberSyntaxTask())
 	tasks = append(tasks, NewMinLengthSyntaxTask())
 	tasks = append(tasks, NewMinimumSyntaxTask())
 	tasks = append(tasks, NewMultipartFormSyntaxTask())
 	tasks = append(tasks, NewNoExampleSyntaxCheckerTask())
 	tasks = append(tasks, NewParamSyntaxCheckerTask())
+	tasks = append(tasks, NewParamsSyntaxCheckerTask())
 	tasks = append(tasks, NewPatternSyntaxCheckerTask())
 	tasks = append(tasks, NewReadOnlySyntaxCheckerTask())
 	tasks = append(tasks, NewRequiredSyntaxCheckerTask())
 	tasks = append(tasks, NewTypeNameSyntaxCheckerTask())
 	tasks = append(tasks, NewURLSyntaxCheckerTask())
+	tasks = append(tasks, NewUseTraitSyntaxTask())
 	tasks = append(tasks, NewViewSyntaxTask())
 	return tasks
 }
@@ -74,7 +78,7 @@ func ExcludeTask(tasks []Task, excludeIDs []string) []Task {
 // NewAttributeSyntaxTask return task that check Attribute() function syntax
 func NewAttributeSyntaxTask() Task {
 	task := Task{
-		Name:         "Attribute() syntax check",
+		Name:         "Attribute can be used in: View, Type, Attribute, Attributes",
 		InspectionID: "FC001",
 		Check:        syntax.AttributeSyntaxChecker,
 	}
@@ -84,7 +88,7 @@ func NewAttributeSyntaxTask() Task {
 // NewDefaultSyntaxTask return task that check Default() function syntax
 func NewDefaultSyntaxTask() Task {
 	task := Task{
-		Name:         "Default() syntax check",
+		Name:         "Default can be used in: Attribute",
 		InspectionID: "FC002",
 		Check:        syntax.DefaultSyntaxChecker,
 	}
@@ -94,7 +98,7 @@ func NewDefaultSyntaxTask() Task {
 // NewEnumSyntaxTask return task that check Enum() function syntax
 func NewEnumSyntaxTask() Task {
 	task := Task{
-		Name:         "Enum() syntax check",
+		Name:         "Enum can be used in: Attribute, Header, Param, HashOf, ArrayOf",
 		InspectionID: "FC003",
 		Check:        syntax.EnumSyntaxChecker,
 	}
@@ -104,7 +108,7 @@ func NewEnumSyntaxTask() Task {
 // NewExampleSyntaxTask return task that check Example() function syntax
 func NewExampleSyntaxTask() Task {
 	task := Task{
-		Name:         "Example() syntax check",
+		Name:         "Example can be used in: Attribute, Header, Param, HashOf, ArrayOf",
 		InspectionID: "FC004",
 		Check:        syntax.ExampleSyntaxChecker,
 	}
@@ -114,7 +118,7 @@ func NewExampleSyntaxTask() Task {
 // NewFormatSyntaxTask return task that check Format() function syntax
 func NewFormatSyntaxTask() Task {
 	task := Task{
-		Name:         "Format() syntax check",
+		Name:         "Format can be used in: Attribute, Header, Param, HashOf, ArrayOf",
 		InspectionID: "FC005",
 		Check:        syntax.FormatSyntaxChecker,
 	}
@@ -124,7 +128,7 @@ func NewFormatSyntaxTask() Task {
 // NewHeaderSyntaxTask return task that check Format() function syntax
 func NewHeaderSyntaxTask() Task {
 	task := Task{
-		Name:         "Header() syntax check",
+		Name:         "Header can be used in: Headers, APIKeySecurity, JWTSecurity",
 		InspectionID: "FC006",
 		Check:        syntax.HeaderSyntaxChecker,
 	}
@@ -134,7 +138,7 @@ func NewHeaderSyntaxTask() Task {
 // NewMaxLengthSyntaxTask return task that check MaxLength() function syntax
 func NewMaxLengthSyntaxTask() Task {
 	task := Task{
-		Name:         "MaxLength() syntax check",
+		Name:         "MaxLength can be used in: Attribute, Header, Param, HashOf, ArrayOf",
 		InspectionID: "FC007",
 		Check:        syntax.MaxLengthChecker,
 	}
@@ -144,18 +148,28 @@ func NewMaxLengthSyntaxTask() Task {
 // NewMaximumSyntaxTask return task that check Maximum() function syntax
 func NewMaximumSyntaxTask() Task {
 	task := Task{
-		Name:         "Maximum() syntax check",
+		Name:         "Maximum can be used in: Attribute, Header, Param, HashOf, ArrayOf",
 		InspectionID: "FC008",
 		Check:        syntax.MaximumSyntaxChecker,
 	}
 	return task
 }
 
-// NewMemberSyntaxTask return task that check Maximum() function syntax
+// NewMediaSyntaxTask return task that check Media() function syntax
+func NewMediaSyntaxTask() Task {
+	task := Task{
+		Name:         "Media can be used inside Response or ResponseTemplate.",
+		InspectionID: "FC009",
+		Check:        syntax.MediaSyntaxChecker,
+	}
+	return task
+}
+
+// NewMemberSyntaxTask return task that check Member() function syntax
 func NewMemberSyntaxTask() Task {
 	task := Task{
-		Name:         "Member() syntax check",
-		InspectionID: "FC009",
+		Name:         "Member can be used in: Payload",
+		InspectionID: "FC010",
 		Check:        syntax.MemberSyntaxChecker,
 	}
 	return task
@@ -164,8 +178,8 @@ func NewMemberSyntaxTask() Task {
 // NewMinLengthSyntaxTask return task that check MinLength() function syntax
 func NewMinLengthSyntaxTask() Task {
 	task := Task{
-		Name:         "MinLength() syntax check",
-		InspectionID: "FC010",
+		Name:         "MinLength can be used in: Attribute, Header, Param, HashOf, ArrayOf",
+		InspectionID: "FC011",
 		Check:        syntax.MinLengthSyntaxChecker,
 	}
 	return task
@@ -174,8 +188,8 @@ func NewMinLengthSyntaxTask() Task {
 // NewMinimumSyntaxTask return task that check Minimum() function syntax
 func NewMinimumSyntaxTask() Task {
 	task := Task{
-		Name:         "Minimum() syntax check",
-		InspectionID: "FC011",
+		Name:         "Minimum can be used in: Attribute, Header, Param, HashOf, ArrayOf",
+		InspectionID: "FC012",
 		Check:        syntax.MinimumSyntaxChecker,
 	}
 	return task
@@ -184,8 +198,8 @@ func NewMinimumSyntaxTask() Task {
 // NewMultipartFormSyntaxTask return task that check MultipartForm() function syntax
 func NewMultipartFormSyntaxTask() Task {
 	task := Task{
-		Name:         "MultipartForm() syntax check",
-		InspectionID: "FC012",
+		Name:         "MultipartForm can be used in: Action",
+		InspectionID: "FC013",
 		Check:        syntax.MultipartFormSyntaxChecker,
 	}
 	return task
@@ -194,8 +208,8 @@ func NewMultipartFormSyntaxTask() Task {
 // NewNoExampleSyntaxCheckerTask return task that check NoExample() function syntax
 func NewNoExampleSyntaxCheckerTask() Task {
 	task := Task{
-		Name:         "NoExample() syntax check",
-		InspectionID: "FC013",
+		Name:         "NoExample can be used in: Attribute, Header, Param, HashOf, ArrayOf",
+		InspectionID: "FC014",
 		Check:        syntax.NoExampleSyntaxChecker,
 	}
 	return task
@@ -204,9 +218,19 @@ func NewNoExampleSyntaxCheckerTask() Task {
 // NewParamSyntaxCheckerTask return task that check Param() function syntax
 func NewParamSyntaxCheckerTask() Task {
 	task := Task{
-		Name:         "Param() syntax check",
-		InspectionID: "FC014",
+		Name:         "Param can be used in: Params",
+		InspectionID: "FC015",
 		Check:        syntax.ParamSyntaxChecker,
+	}
+	return task
+}
+
+// NewParamsSyntaxCheckerTask return task that check Params() function syntax
+func NewParamsSyntaxCheckerTask() Task {
+	task := Task{
+		Name:         "Params can be used inside Action to define the action parameters",
+		InspectionID: "FC016",
+		Check:        syntax.ParamsSyntaxChecker,
 	}
 	return task
 }
@@ -214,8 +238,8 @@ func NewParamSyntaxCheckerTask() Task {
 // NewPatternSyntaxCheckerTask return task that check Pattern() function syntax
 func NewPatternSyntaxCheckerTask() Task {
 	task := Task{
-		Name:         "Pattern() syntax check",
-		InspectionID: "FC015",
+		Name:         "Pattern can be used in: Attribute, Header, Param, HashOf, ArrayOf",
+		InspectionID: "FC017",
 		Check:        syntax.PatternSyntaxChecker,
 	}
 	return task
@@ -224,8 +248,8 @@ func NewPatternSyntaxCheckerTask() Task {
 // NewReadOnlySyntaxCheckerTask return task that check ReadOnly() function syntax
 func NewReadOnlySyntaxCheckerTask() Task {
 	task := Task{
-		Name:         "ReadOnly() syntax check",
-		InspectionID: "FC016",
+		Name:         "ReadOnly can be used in: Attribute",
+		InspectionID: "FC018",
 		Check:        syntax.ReadOnlySyntaxChecker,
 	}
 	return task
@@ -234,8 +258,8 @@ func NewReadOnlySyntaxCheckerTask() Task {
 // NewRequiredSyntaxCheckerTask return task that check Required() function syntax
 func NewRequiredSyntaxCheckerTask() Task {
 	task := Task{
-		Name:         "Required() syntax check",
-		InspectionID: "FC017",
+		Name:         "Required can be used in: Attributes, Headers, Payload, Type, Params",
+		InspectionID: "FC019",
 		Check:        syntax.RequiredSyntaxChecker,
 	}
 	return task
@@ -244,8 +268,8 @@ func NewRequiredSyntaxCheckerTask() Task {
 // NewTypeNameSyntaxCheckerTask return task that check TypeName() function syntax
 func NewTypeNameSyntaxCheckerTask() Task {
 	task := Task{
-		Name:         "TypeName() syntax check",
-		InspectionID: "FC018",
+		Name:         "TypeName can be used in: MediaType",
+		InspectionID: "FC020",
 		Check:        syntax.TypeNameSyntaxChecker,
 	}
 	return task
@@ -254,9 +278,19 @@ func NewTypeNameSyntaxCheckerTask() Task {
 // NewURLSyntaxCheckerTask return task that check URL() function syntax
 func NewURLSyntaxCheckerTask() Task {
 	task := Task{
-		Name:         "URL() syntax check",
-		InspectionID: "FC019",
+		Name:         "URL can be used in: Contact, License, Docs",
+		InspectionID: "FC021",
 		Check:        syntax.URLSyntaxChecker,
+	}
+	return task
+}
+
+// NewUseTraitSyntaxTask return task that check UseTrait() function syntax
+func NewUseTraitSyntaxTask() Task {
+	task := Task{
+		Name:         "UseTrait can be used inside a Resource, Action, Type, MediaType or Attribute",
+		InspectionID: "FC022",
+		Check:        syntax.UseTraitSyntaxChecker,
 	}
 	return task
 }
@@ -264,8 +298,8 @@ func NewURLSyntaxCheckerTask() Task {
 // NewViewSyntaxTask return task that check View() function syntax
 func NewViewSyntaxTask() Task {
 	task := Task{
-		Name:         "View() syntax check",
-		InspectionID: "FC020",
+		Name:         "View can be used in: MediaType, Response",
+		InspectionID: "FC023",
 		Check:        syntax.ViewSyntaxChecker,
 	}
 	return task

@@ -1,6 +1,9 @@
 package lint
 
 import (
+	"fmt"
+
+	"github.com/fatih/color"
 	"github.com/nao1215/goavl/internal/task"
 	"github.com/nao1215/goavl/internal/utils/fileutils"
 	"github.com/nao1215/goavl/internal/utils/ioutils"
@@ -41,6 +44,14 @@ func PrintAST(files []string) {
 			continue
 		}
 		task.Check(f)
+	}
+}
+
+// PrintCheckTaskList print task list.
+func PrintCheckTaskList() {
+	tasks := task.Setup()
+	for _, v := range tasks {
+		fmt.Printf("%s: %s\n", color.GreenString(v.InspectionID), v.Name)
 	}
 }
 
