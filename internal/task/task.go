@@ -12,6 +12,8 @@ type check func(filepath string)
 type Task struct {
 	// Name is linter-task name.
 	Name string
+	// InspectionID is　task-specific number
+	InspectionID string
 	// Check define lint task from one perspective.
 	Check check
 }
@@ -48,25 +50,33 @@ func Setup() []Task {
 	return tasks
 }
 
+// ExcludeTask exclude task from task list
+func ExcludeTask(tasks []Task, excludeIDs []string) []Task {
+	tmp := []Task{}
+
+	for _, v := range excludeIDs {
+		for _, task := range tasks {
+			if task.InspectionID != v {
+				tmp = append(tmp, task)
+			}
+		}
+		tasks = tmp
+		tmp = []Task{}
+	}
+	return tasks
+}
+
 // TODO:
 // I wanted to define the NewXxxTask() function in each task file.
 // However, I couldn't solve "import cycle not allowed" easily.
 // So, as a workaround, I define the function in this file.
 
-// NewViewSyntaxTask return task that check View() function syntax
-func NewViewSyntaxTask() Task {
-	task := Task{
-		Name:  "View() syntax check",
-		Check: syntax.ViewSyntaxChecker,
-	}
-	return task
-}
-
 // NewAttributeSyntaxTask return task that check Attribute() function syntax
 func NewAttributeSyntaxTask() Task {
 	task := Task{
-		Name:  "Attribute() syntax check",
-		Check: syntax.AttributeSyntaxChecker,
+		Name:         "Attribute() syntax check",
+		InspectionID: "FC001",
+		Check:        syntax.AttributeSyntaxChecker,
 	}
 	return task
 }
@@ -74,8 +84,9 @@ func NewAttributeSyntaxTask() Task {
 // NewDefaultSyntaxTask return task that check Default() function syntax
 func NewDefaultSyntaxTask() Task {
 	task := Task{
-		Name:  "Default() syntax check",
-		Check: syntax.DefaultSyntaxChecker,
+		Name:         "Default() syntax check",
+		InspectionID: "FC002",
+		Check:        syntax.DefaultSyntaxChecker,
 	}
 	return task
 }
@@ -83,8 +94,9 @@ func NewDefaultSyntaxTask() Task {
 // NewEnumSyntaxTask return task that check Enum() function syntax
 func NewEnumSyntaxTask() Task {
 	task := Task{
-		Name:  "Enum() syntax check",
-		Check: syntax.EnumSyntaxChecker,
+		Name:         "Enum() syntax check",
+		InspectionID: "FC003",
+		Check:        syntax.EnumSyntaxChecker,
 	}
 	return task
 }
@@ -92,8 +104,9 @@ func NewEnumSyntaxTask() Task {
 // NewExampleSyntaxTask return task that check Example() function syntax
 func NewExampleSyntaxTask() Task {
 	task := Task{
-		Name:  "Example() syntax check",
-		Check: syntax.ExampleSyntaxChecker,
+		Name:         "Example() syntax check",
+		InspectionID: "FC004",
+		Check:        syntax.ExampleSyntaxChecker,
 	}
 	return task
 }
@@ -101,8 +114,9 @@ func NewExampleSyntaxTask() Task {
 // NewFormatSyntaxTask return task that check Format() function syntax
 func NewFormatSyntaxTask() Task {
 	task := Task{
-		Name:  "Format() syntax check",
-		Check: syntax.FormatSyntaxChecker,
+		Name:         "Format() syntax check",
+		InspectionID: "FC005",
+		Check:        syntax.FormatSyntaxChecker,
 	}
 	return task
 }
@@ -110,8 +124,9 @@ func NewFormatSyntaxTask() Task {
 // NewHeaderSyntaxTask return task that check Format() function syntax
 func NewHeaderSyntaxTask() Task {
 	task := Task{
-		Name:  "Header() syntax check",
-		Check: syntax.HeaderSyntaxChecker,
+		Name:         "Header() syntax check",
+		InspectionID: "FC006",
+		Check:        syntax.HeaderSyntaxChecker,
 	}
 	return task
 }
@@ -119,8 +134,9 @@ func NewHeaderSyntaxTask() Task {
 // NewMaxLengthSyntaxTask return task that check MaxLength() function syntax
 func NewMaxLengthSyntaxTask() Task {
 	task := Task{
-		Name:  "MaxLength() syntax check",
-		Check: syntax.MaxLengthChecker,
+		Name:         "MaxLength() syntax check",
+		InspectionID: "FC007",
+		Check:        syntax.MaxLengthChecker,
 	}
 	return task
 }
@@ -128,8 +144,9 @@ func NewMaxLengthSyntaxTask() Task {
 // NewMaximumSyntaxTask return task that check Maximum() function syntax
 func NewMaximumSyntaxTask() Task {
 	task := Task{
-		Name:  "Maximum() syntax check",
-		Check: syntax.MaximumSyntaxChecker,
+		Name:         "Maximum() syntax check",
+		InspectionID: "FC008",
+		Check:        syntax.MaximumSyntaxChecker,
 	}
 	return task
 }
@@ -137,8 +154,9 @@ func NewMaximumSyntaxTask() Task {
 // NewMemberSyntaxTask return task that check Maximum() function syntax
 func NewMemberSyntaxTask() Task {
 	task := Task{
-		Name:  "Member() syntax check",
-		Check: syntax.MemberSyntaxChecker,
+		Name:         "Member() syntax check",
+		InspectionID: "FC009",
+		Check:        syntax.MemberSyntaxChecker,
 	}
 	return task
 }
@@ -146,8 +164,9 @@ func NewMemberSyntaxTask() Task {
 // NewMinLengthSyntaxTask return task that check MinLength() function syntax
 func NewMinLengthSyntaxTask() Task {
 	task := Task{
-		Name:  "MinLength() syntax check",
-		Check: syntax.MinLengthSyntaxChecker,
+		Name:         "MinLength() syntax check",
+		InspectionID: "FC010",
+		Check:        syntax.MinLengthSyntaxChecker,
 	}
 	return task
 }
@@ -155,8 +174,9 @@ func NewMinLengthSyntaxTask() Task {
 // NewMinimumSyntaxTask return task that check Minimum() function syntax
 func NewMinimumSyntaxTask() Task {
 	task := Task{
-		Name:  "Minimum() syntax check",
-		Check: syntax.MinimumSyntaxChecker,
+		Name:         "Minimum() syntax check",
+		InspectionID: "FC011",
+		Check:        syntax.MinimumSyntaxChecker,
 	}
 	return task
 }
@@ -164,8 +184,9 @@ func NewMinimumSyntaxTask() Task {
 // NewMultipartFormSyntaxTask return task that check MultipartForm() function syntax
 func NewMultipartFormSyntaxTask() Task {
 	task := Task{
-		Name:  "MultipartForm() syntax check",
-		Check: syntax.MultipartFormSyntaxChecker,
+		Name:         "MultipartForm() syntax check",
+		InspectionID: "FC012",
+		Check:        syntax.MultipartFormSyntaxChecker,
 	}
 	return task
 }
@@ -173,8 +194,9 @@ func NewMultipartFormSyntaxTask() Task {
 // NewNoExampleSyntaxCheckerTask return task that check NoExample() function syntax
 func NewNoExampleSyntaxCheckerTask() Task {
 	task := Task{
-		Name:  "NoExample() syntax check",
-		Check: syntax.NoExampleSyntaxChecker,
+		Name:         "NoExample() syntax check",
+		InspectionID: "FC013",
+		Check:        syntax.NoExampleSyntaxChecker,
 	}
 	return task
 }
@@ -182,8 +204,9 @@ func NewNoExampleSyntaxCheckerTask() Task {
 // NewParamSyntaxCheckerTask return task that check Param() function syntax
 func NewParamSyntaxCheckerTask() Task {
 	task := Task{
-		Name:  "Param() syntax check",
-		Check: syntax.ParamSyntaxChecker,
+		Name:         "Param() syntax check",
+		InspectionID: "FC014",
+		Check:        syntax.ParamSyntaxChecker,
 	}
 	return task
 }
@@ -191,8 +214,9 @@ func NewParamSyntaxCheckerTask() Task {
 // NewPatternSyntaxCheckerTask return task that check Pattern() function syntax
 func NewPatternSyntaxCheckerTask() Task {
 	task := Task{
-		Name:  "Pattern() syntax check",
-		Check: syntax.PatternSyntaxChecker,
+		Name:         "Pattern() syntax check",
+		InspectionID: "FC015",
+		Check:        syntax.PatternSyntaxChecker,
 	}
 	return task
 }
@@ -200,8 +224,9 @@ func NewPatternSyntaxCheckerTask() Task {
 // NewReadOnlySyntaxCheckerTask return task that check ReadOnly() function syntax
 func NewReadOnlySyntaxCheckerTask() Task {
 	task := Task{
-		Name:  "ReadOnly() syntax check",
-		Check: syntax.ReadOnlySyntaxChecker,
+		Name:         "ReadOnly() syntax check",
+		InspectionID: "FC016",
+		Check:        syntax.ReadOnlySyntaxChecker,
 	}
 	return task
 }
@@ -209,8 +234,9 @@ func NewReadOnlySyntaxCheckerTask() Task {
 // NewRequiredSyntaxCheckerTask return task that check Required() function syntax
 func NewRequiredSyntaxCheckerTask() Task {
 	task := Task{
-		Name:  "Required() syntax check",
-		Check: syntax.RequiredSyntaxChecker,
+		Name:         "Required() syntax check",
+		InspectionID: "FC017",
+		Check:        syntax.RequiredSyntaxChecker,
 	}
 	return task
 }
@@ -218,8 +244,9 @@ func NewRequiredSyntaxCheckerTask() Task {
 // NewTypeNameSyntaxCheckerTask return task that check TypeName() function syntax
 func NewTypeNameSyntaxCheckerTask() Task {
 	task := Task{
-		Name:  "TypeName() syntax check",
-		Check: syntax.TypeNameSyntaxChecker,
+		Name:         "TypeName() syntax check",
+		InspectionID: "FC018",
+		Check:        syntax.TypeNameSyntaxChecker,
 	}
 	return task
 }
@@ -227,8 +254,19 @@ func NewTypeNameSyntaxCheckerTask() Task {
 // NewURLSyntaxCheckerTask return task that check URL() function syntax
 func NewURLSyntaxCheckerTask() Task {
 	task := Task{
-		Name:  "URL() syntax check",
-		Check: syntax.URLSyntaxChecker,
+		Name:         "URL() syntax check",
+		InspectionID: "FC019",
+		Check:        syntax.URLSyntaxChecker,
+	}
+	return task
+}
+
+// NewViewSyntaxTask return task that check View() function syntax
+func NewViewSyntaxTask() Task {
+	task := Task{
+		Name:         "View() syntax check",
+		InspectionID: "FC020",
+		Check:        syntax.ViewSyntaxChecker,
 	}
 	return task
 }
@@ -236,8 +274,9 @@ func NewURLSyntaxCheckerTask() Task {
 // NewResourceNameCheckerTask return task that check Resource() argument name.
 func NewResourceNameCheckerTask() Task {
 	task := Task{
-		Name:  "Resource() argument name checker",
-		Check: name.ResourceNameChecker,
+		Name:         "Resource() argument name checker",
+		InspectionID: "NC001",
+		Check:        name.ResourceNameChecker,
 	}
 	return task
 }
@@ -245,8 +284,9 @@ func NewResourceNameCheckerTask() Task {
 // NewActionNameCheckerTask return task that check Action() argument name.
 func NewActionNameCheckerTask() Task {
 	task := Task{
-		Name:  "Action() argument name checker",
-		Check: name.ActionNameChecker,
+		Name:         "Action() argument name checker",
+		InspectionID: "NC002",
+		Check:        name.ActionNameChecker,
 	}
 	return task
 }
@@ -254,8 +294,9 @@ func NewActionNameCheckerTask() Task {
 // NewRoutingNameCheckerTask return task that check Routing() argument name.
 func NewRoutingNameCheckerTask() Task {
 	task := Task{
-		Name:  "Routing() argument name checker",
-		Check: name.RoutingNameChecker,
+		Name:         "Routing() argument name checker",
+		InspectionID: "NC003",
+		Check:        name.RoutingNameChecker,
 	}
 	return task
 }
@@ -263,8 +304,9 @@ func NewRoutingNameCheckerTask() Task {
 // NewAttributeNameCheckerTask return task that check Attribute argument name.
 func NewAttributeNameCheckerTask() Task {
 	task := Task{
-		Name:  "Attribute() variable and argument name checker",
-		Check: name.AttributeNameChecker,
+		Name:         "Attribute() variable and argument name checker",
+		InspectionID: "NC004",
+		Check:        name.AttributeNameChecker,
 	}
 	return task
 }
@@ -272,8 +314,9 @@ func NewAttributeNameCheckerTask() Task {
 // NewAttributeNoExampleCheckerTask return task that check whether the example of Attribute() is written.
 func NewAttributeNoExampleCheckerTask() Task {
 	task := Task{
-		Name:  "Checker whetjer the example of Attribute() is written",
-		Check: syntax.AttributeNoExampleChecker,
+		Name:         "Checker whether the example of Attribute() is written",
+		InspectionID: "UF001",
+		Check:        syntax.AttributeNoExampleChecker,
 	}
 	return task
 }
@@ -281,8 +324,9 @@ func NewAttributeNoExampleCheckerTask() Task {
 // NewNoDescriptionCheckerTask return task that check whether description exist.
 func NewNoDescriptionCheckerTask() Task {
 	task := Task{
-		Name:  "Check whether Description() is written",
-		Check: syntax.NoDescriptionChecker,
+		Name:         "Check whether Description() is written",
+		InspectionID: "UF002",
+		Check:        syntax.NoDescriptionChecker,
 	}
 	return task
 }

@@ -16,9 +16,13 @@ var rootCmd = &cobra.Command{
 		if err != nil {
 			ioutils.Die(err.Error())
 		}
+		exclude, err := cmd.Flags().GetStringSlice("exclude")
+		if err != nil {
+			ioutils.Die(err.Error())
+		}
 
 		if file == "" {
-			lint.Run(args)
+			lint.Run(args, exclude)
 		} else {
 			lint.CheckOneFile(file)
 		}
@@ -35,4 +39,5 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().StringP("file", "f", "", "specify the file to be checked")
+	rootCmd.Flags().StringSliceP("exclude", "e", []string{}, "specify inspection ID to be excluded by comma separating")
 }

@@ -8,7 +8,7 @@ import (
 )
 
 // Run execute all linter-tasks.
-func Run(files []string) {
+func Run(files, excludeIDs []string) {
 	tasks := task.Setup()
 	files, err := fileutils.Walk(pathutils.CWD())
 	if err != nil {
