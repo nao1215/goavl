@@ -19,7 +19,8 @@ goavlは、**goa version 1 のみをサポート**し、現行のversion 3 は�
 ```
 $ go install github.com/nao1215/goavl@latest
 ```
-### 実行例
+# 実行例
+## 全チェック
 goavlはカレントディレクトリ以下にあるdesignパッケージ（goファイル）を抽出し、そのファイルに対してチェックを行います。より詳細な例が知りたい方は、[example.md](./doc/example.md)をご確認ください。
 ```
 $ goavl 
@@ -30,6 +31,34 @@ $ goavl
 [WARN] test/sample/goa.go:23   Attribute("zzzXXX-ss") is not snake case ('zzz_xxx_ss')
 [WARN] test/sample/goa.go:24   NoExample() in Attribute(). NoExample() is not user(client) friendly
 [WARN] test/sample/goa.go:26   Not exist Example() in Attribute().
+```
+## ファイル1件のチェック
+-f（--file）オプションを使うと、チェック対象のファイルを指定できます。複数ファイルの指定は、出来ません。
+```
+$ goavl --file test/sample/goa.go
+```
+## チェック項目の確認
+サブコマンドlistを使用すると、チェック項目一覧が表示されます。表示は、"Inspection ID:チェック内容"の形式です。
+```
+$ goavl list
+NC001: Resource() argument name checker
+NC002: Action() argument name checker
+NC003: Routing() argument name checker
+NC004: Attribute() variable and argument name checker
+UF001: Checker whether the example of Attribute() is written
+UF002: Check whether Description() is written
+FC001: Attribute can be used in: View, Type, Attribute, Attributes
+FC002: Default can be used in: Attribute
+FC003: Enum can be used in: Attribute, Header, Param, HashOf, ArrayOf
+FC004: Example can be used in: Attribute, Header, Param, HashOf, ArrayOf
+FC005: Format can be used in: Attribute, Header, Param, HashOf, ArrayOf
+(省略)
+```
+
+## チェック項目の除外
+指摘を許容（無視）したい場合は、--excludeオプションを使用してください。カンマ区切りで、除外したい"Inspection ID"を複数指定できます。
+```
+$ goavl --exclude=FC001,NC003
 ```
 
 # ライセンス
