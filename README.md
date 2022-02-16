@@ -1,27 +1,25 @@
 [![Build](https://github.com/nao1215/goavl/actions/workflows/build.yml/badge.svg)](https://github.com/nao1215/goavl/actions/workflows/build.yml)
-[![UnitTest](https://github.com/nao1215/goavl/actions/workflows/unit_test.yml/badge.svg)](https://github.com/nao1215/goavl/actions/workflows/unit_test.yml)
-
+[![UnitTest](https://github.com/nao1215/goavl/actions/workflows/unit_test.yml/badge.svg)](https://github.com/nao1215/goavl/actions/workflows/unit_test.yml)  
+[[日本語](./doc/ja/README.md)]
 # goavl: Goa framework (ver1) linter
-goavlは、[goa version1（フォーク版）](https://github.com/shogo82148/goa-v1)のlinterです。開発目的は、goaを用いたWeb APIデザイン設計速度を早め、チーム内でのデザイン差異を極力小さくする事です。
+goavl is linter of [goa version1 (fork version)] (https://github.com/shogo82148/goa-v1). The purpose of development is to speed up Web API design using goa and minimize design differences within the team.
 
-goaは、DSLで記述されたデザインをもとに、Web APIホスティングに必要なベース処理（ルーティング、コントローラ、Swaggerなど）を生成します。しかしながら、課題が1点あります。それは、デザインから各種ファイルの生成に失敗した場合、エラー箇所を即座に特定できない点です。  
+Goa generate the base-files(routing, controller, Swagger, etc.) required for Web API hosting that based on the design written in DSL. However, it is difficult to use. If the design fails to generate various files, the error location cannot be identified immediately (error message is not user friendly). For example, modern compilers show the number of lines in error. However, goa does not output any such information.
 
-例えば、近年のコンパイラはエラー箇所の行数を示します。しかし、goaはそのような情報を一切出力しません。そこで、goaデザインファイルの問題箇所を即座に特定するためのLinter開発に着手しました。
-
-goavlは、**goa version 1 のみをサポート**し、現行のversion 3 はサポートしない予定です。その理由は、フォークしたgoa version 1 を私が利用しているからです。何故、フォーク版を使用しているかの背景は、[他のサイト](https://furusax0621.hatenablog.com/entry/2021/12/13/000000)で説明しています（記事の作者とgoavl開発者は別人のため注意）
+So, we started developing Linter to instantly identify the problem areas in the goa design file. goavl will only support **goa version 1**, will not support the current version (it's means version 3). The reason is that I'm using forked goa version 1.
 
 
-# インストール方法
-### Step.1 前準備
-現在は、" $ go install"によるインストールのみをサポートしています。そのため、golangの開発環境をシステムにインストールしていない場合、[golang公式サイト](https://go.dev/doc/install)からgolangをインストールしてください。
+# How to install
+### Step.1 Install golang
+goavl only supports installation with "$ go install". If you does not have the golang development environment installed on your system, please install golang from the [golang official website] (https://go.dev/doc/install).
 
-### Step2. インストール
+### Step2. Install goavl
 ```
 $ go install github.com/nao1215/goavl@latest
 ```
-# 実行例
-## 全チェック
-goavlはカレントディレクトリ以下にあるdesignパッケージ（goファイル）を抽出し、そのファイルに対してチェックを行います。より詳細な例が知りたい方は、[example.md](./doc/example.md)をご確認ください。
+# How to use
+## check all
+goavl extracts the design package (go file) under the current directory and checks the files. If you want to know a more detailed example, please check [example.md] (./doc/ja/example.md).
 ```
 $ goavl 
 [NC001] test/sample/action.go:7    Resource("operandsNG") is not snake case ('operands_ng')
@@ -33,13 +31,13 @@ $ goavl
 [UF001] test/sample/attribute.go:15   Not exist Example() in Attribute().
 [FC023] test/sample/bug.go:10   Attributes() has View(). View() can be used in MediaType, Response
 ```
-## ファイル1件のチェック
--f（--file）オプションを使うと、チェック対象のファイルを指定できます。複数ファイルの指定は、出来ません。
+## Check only one file
+You can use the -f (--file) option to specify the file to check. You can not specify multiple files.
 ```
 $ goavl --file test/sample/goa.go
 ```
-## チェック項目の確認
-サブコマンドlistを使用すると、チェック項目一覧が表示されます。表示は、"Inspection ID:チェック内容"の形式です。
+## Confirmation of check items (inspection IDs)
+If you use the subcommand list, goavl print the list of check items. The output is in the form of "Inspection ID: Check Contents".
 ```
 $ goavl list
 NC001: Resource() argument name checker
@@ -56,18 +54,17 @@ FC005: Format can be used in: Attribute, Header, Param, HashOf, ArrayOf
 (省略)
 ```
 
-## チェック項目の除外
-指摘を許容（無視）したい場合は、--excludeオプションを使用してください。カンマ区切りで、除外したい"Inspection ID"を複数指定できます。
+## Exclusion of check items (inspection IDs)
+If you want to ignore the indication, you use the --exclude option. You can specify multiple "Inspection IDs" that you want to exclude, separated by commas.
 ```
 $ goavl --exclude=FC001,NC003
 ```
+# LICENSE
+The goavl project is the mixed-license.
+- MIT License（[casee*.go](./internal/utils/strutils/casee.go) and [camelcase*.go](./internal/utils/strutils/camelcase.go)）
+- [Apache License Version 2.0](./LICENSE)（All codes other than the above）
 
-# ライセンス
-goavlプロジェクトは、複合ライセンスです。
-- MITライセンス（[casee*.go](./internal/utils/strutils/casee.go) および [camelcase*.go](./internal/utils/strutils/camelcase.go)）
-- [Apache License Version 2.0](./LICENSE)（上記以外のコード全て）
+The authors of the MIT license source code are [pinzolo] (https://github.com/pinzolo) and [Fatih Arslan] (https://github.com/fatih). The code written by each author clearly states the full MIT license and Copyright.
 
-MITライセンスのソースコードの作者は、[pinzolo氏](https://github.com/pinzolo)および[Fatih Arslan氏](https://github.com/fatih)です。それぞれの作者が書かれたコードには、MITライセンス全文およびCopyrightが明示されています。
-
-# 名前の由来
-初期名称は"goalinter-v1"。linterのVersion 1に見えるため、"goav1linter"に改名。その後、"1"と"l"が似ていたため、それらを統合して名前を短くしました（= "goavl"）
+# Origin of the name
+The initial name is "goal inter-v1". Renamed to "goav1linter" because it looks like version 1 of linter. After that, "1" and "l" were similar, so I integrated them and shortened the name (= "goavl").
