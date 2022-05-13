@@ -3,6 +3,7 @@ package task
 import (
 	"github.com/nao1215/goavl/internal/task/debug"
 	"github.com/nao1215/goavl/internal/task/name"
+	"github.com/nao1215/goavl/internal/task/require"
 	"github.com/nao1215/goavl/internal/task/syntax"
 )
 
@@ -51,6 +52,7 @@ func Setup() []Task {
 	tasks = append(tasks, NewURLSyntaxCheckerTask())
 	tasks = append(tasks, NewUseTraitSyntaxTask())
 	tasks = append(tasks, NewViewSyntaxTask())
+	tasks = append(tasks, NewArrayRequireCheckerTask())
 	return tasks
 }
 
@@ -361,6 +363,16 @@ func NewNoDescriptionCheckerTask() Task {
 		Name:         "Check whether Description() is written",
 		InspectionID: "UF002",
 		Check:        syntax.NoDescriptionChecker,
+	}
+	return task
+}
+
+// NewArrayRequireCheckerTask return task that check array with require.
+func NewArrayRequireCheckerTask() Task {
+	task := Task{
+		Name:         "Check whether Array() with Require()",
+		InspectionID: "RC001",
+		Check:        require.ArrayRequireChecker,
 	}
 	return task
 }
