@@ -11,7 +11,7 @@ So, we started developing Linter to instantly identify the problem areas in the 
 
 # How to install
 ### Step.1 Install golang
-goavl only supports installation with "$ go install". If you does not have the golang development environment installed on your system, please install golang from the [golang official website] (https://go.dev/doc/install).
+goavl only supports installation with "$ go install". If you does not have the golang development environment installed on your system, please install golang from the [golang official website](https://go.dev/doc/install).
 
 ### Step2. Install goavl
 ```
