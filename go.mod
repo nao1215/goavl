@@ -4,11 +4,12 @@ go 1.18
 
 require (
 	github.com/fatih/color v1.13.0
-	github.com/shogo82148/goa-v1 v1.5.12
+	github.com/shogo82148/goa-v1 v1.5.13
 	github.com/spf13/cobra v1.4.0
 )
 
 require (
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dimfeld/httppath v0.0.0-20170720192232-ee938bf73598 // indirect
 	github.com/gofrs/uuid v4.2.0+incompatible // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1 // indirect
