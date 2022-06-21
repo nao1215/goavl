@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/fatih/color v1.13.0
 	github.com/shogo82148/goa-v1 v1.5.12
-	github.com/spf13/cobra v1.4.0
+	github.com/spf13/cobra v1.5.0
 )
 
 require (
