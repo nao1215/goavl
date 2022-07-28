@@ -15,6 +15,6 @@ func DefaultSyntaxChecker(filepath, inspectionID string) {
 		ioutils.Die(err.Error())
 	}
 	for _, decl := range f.Decls {
-		syntaxCheck(filepath, inspectionID, fset, decl, "Default", []string{"Attribute"})
+		syntaxCheck(filepath, inspectionID, fset, decl, "Default", []string{"Attribute", "Param"})
 	}
 }
