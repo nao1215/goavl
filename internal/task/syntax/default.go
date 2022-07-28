@@ -15,6 +15,7 @@ func DefaultSyntaxChecker(filepath, inspectionID string) {
 		ioutils.Die(err.Error())
 	}
 	for _, decl := range f.Decls {
+		// The documentation states that "Default" cannot be set in "Param()". However, this explanation is incorrect.
 		syntaxCheck(filepath, inspectionID, fset, decl, "Default", []string{"Attribute", "Param"})
 	}
 }
