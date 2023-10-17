@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/fatih/color v1.15.0
-	github.com/shogo82148/goa-v1 v1.5.14
+	github.com/shogo82148/goa-v1 v1.5.15
 	github.com/spf13/cobra v1.7.0
 )
 
@@ -22,5 +22,5 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.7.1 // indirect
 	github.com/zach-klippenstein/goregen v0.0.0-20160303162051-795b5e3961ea // indirect
-	golang.org/x/sys v0.8.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 )
